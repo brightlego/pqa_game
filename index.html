@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PQA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game_window">
+
+        <canvas id="states" height="500" width="700"></canvas>
+        <canvas id="stateHitRegion" height="700" width="700" hidden="hidden"></canvas>
+        <table id="queue"></table>
+        <p id="word"></p>
+        <button onclick="window.Game.instance.resetCurrentPQA()">Reset</button>
+
+    </div>
+    <script src="dist/app.js"></script>
+</body>
+</html>

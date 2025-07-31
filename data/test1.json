@@ -1,0 +1,50 @@
+{
+  "states": [
+    {
+      "name": "q1",
+      "position": { "x": 100.0, "y": 100.0 },
+      "isAccepting": false
+    },
+    {
+      "name": "q2",
+      "position": { "x": 300.0, "y": 100.0 },
+      "isAccepting": false
+    },
+    {
+      "name": "q3",
+      "position": { "x": 400.0, "y": 200.0 },
+      "isAccepting": true
+    }
+  ],
+  "inputAlphabet": ["a", "b", "c"],
+  "queueAlphabet": ["x", "y", "z"],
+  "transitions": [
+    {
+      "stateFrom": "q1",
+      "stateTo": "q2",
+      "input": "a",
+      "queueIn": {
+        "symbol": "x",
+        "priority": 0
+      },
+      "queueOut": null,
+      "path": [ {"x": 130.0, "y": 100.0}, {"x": 268.0, "y": 100.0} ],
+      "labelPosition": {"x": 150.0, "y": 85.0 }
+    },
+    {
+      "stateFrom": "q2",
+      "stateTo": "q3",
+      "input": null,
+      "queueIn": null,
+      "queueOut": {
+        "symbol": "x",
+        "priority": 0
+      },
+      "path": [ {"x": 330.0, "y": 100.0}, {"x": 350.0, "y": 100.0}, {"x": 400, "y": 150}, {"x": 400, "y":  168} ],
+      "labelPosition": {"x": 375.0, "y": 110.0 }
+    }
+  ],
+  "priorities": [2.0, 1.0, 0.0],
+  "initialState": "q1",
+  "word": ["a", "b", "c"]
+}
