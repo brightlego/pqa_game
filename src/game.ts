@@ -8,7 +8,7 @@ export class Game {
     static instance: Game | null = null;
 
     constructor() {
-        this.ui = new GameUI();
+        this.ui = new GameUI(this);
         this.pqa = null;
         Game.instance = this;
     }
@@ -26,18 +26,24 @@ export class Game {
 
     public onStateClicked(e: MouseEvent) {
         let transitionIdx = this.ui.getTransitionIdx(e);
-        if (transitionIdx == 0xffffff) {
+        if (transitionIdx >= 0x600000) {
             return;
         }
-        this.tryRunTransition(transitionIdx);
+        if (this.tryRunTransition(transitionIdx)) {
+            this.ui.onTransitionClicked(e);
+        }
         this.onStateHover(e);
+
+        if (this.pqa?.canAccept()) {
+            this.ui.onAccept();
+        }
     }
 
-    tryRunTransition(transitionIdx: number) {
+    tryRunTransition(transitionIdx: number): boolean {
         let pqa: PQARun<string, string, string>;
         if (this.pqa === null) {
             this.ui.showError("No PQA loaded");
-            return;
+            return false;
         } else {
             pqa = this.pqa;
         }
@@ -50,6 +56,7 @@ export class Game {
         this.ui.setActiveState(pqa.state);
         this.ui.updatePriorityQueue(pqa.queue());
         this.ui.updateWord(pqa.word);
+        return result;
     }
 
     canRunTransition(transitionIdx: number): boolean {
@@ -67,6 +74,21 @@ export class Game {
         if (data !== null && data !== undefined) {
             this.loadPQA(data);
         }
+        this.ui.onReset();
+    }
+
+    public getMostRecentlyAddedElement(): { symbol: string; priority: number } | null {
+        if (this.pqa === null) {
+            return null;
+        }
+        return this.pqa.getMostRecentlyAddedElement()
+    }
+
+    public getMostRecentlyRemovedElement(): { symbol: string; priority: number } | null {
+        if (this.pqa === null) {
+            return null;
+        }
+        return this.pqa.getMostRecentlyRemovedElement()
     }
 }
 

@@ -13,14 +13,21 @@ export class GameUI {
     queueTableFields: Map<string, HTMLTableCellElement>;
     wordParagraph: HTMLParagraphElement;
     data: PQAData | null = null;
+    queueHidden: boolean = false;
+    buttonClickSound: HTMLAudioElement = new Audio("sounds/219069__annabloom__click1.wav");
+    resetSound: HTMLAudioElement = new Audio("sounds/54405__korgms2000b__button-click.wav");
+    acceptSound: HTMLAudioElement = new Audio("sounds/66136__aji__ding30603-spedup.wav");
+    game: Game;
 
 
-    public constructor() {
+
+    public constructor(game: Game) {
         this.stateCanvas = document.getElementById("states") as HTMLCanvasElement;
         this.queueTable = document.getElementById("queue") as HTMLTableElement;
         this.hitRegionCanvas = document.getElementById("stateHitRegion") as HTMLCanvasElement;
         this.wordParagraph = document.getElementById("word") as HTMLParagraphElement;
         this.queueTableFields = new Map();
+        this.game = game;
     }
 
     public setPQA(pqa: PQARun<string, string, string>) {
@@ -51,7 +58,6 @@ export class GameUI {
         let y = event.offsetY
         let context = this.hitRegionCanvas.getContext("2d")!;
         let hitRegion = context.getImageData(x, y, 1, 1).data;
-        console.log(event.offsetX, event.offsetY, hitRegion)
         return hitRegion[0]*256*256 + hitRegion[1]*256 + hitRegion[2];
     }
 
@@ -61,7 +67,7 @@ export class GameUI {
         let context = this.hitRegionCanvas.getContext("2d")!;
         let hitRegion = context.getImageData(x, y, 1, 1).data;
 
-        if (hitRegion[0] !== 255 && hitRegion[1] !== 255 && hitRegion[2] !== 255) {
+        if (hitRegion[0] < 0x60) {
             if (game.canRunTransition(this.getTransitionIdx(event))) {
                 this.stateCanvas.style.cursor = "pointer";
             } else {
@@ -96,12 +102,16 @@ export class GameUI {
             result += transition.input;
         }
 
+        if (this.queueHidden) {
+            return result;
+        }
+
         result += " : ";
 
         if (transition.queueOut === null) {
             result += '∅'
         } else {
-            result += `${transition.queueOut.symbol}, ${transition.queueOut.priority}`;
+            result += `(${transition.queueOut.symbol}, ${transition.queueOut.priority})`;
         }
 
         result += " ↦ "
@@ -109,7 +119,7 @@ export class GameUI {
         if (transition.queueIn === null) {
             result += '∅'
         } else {
-            result += `${transition.queueIn.symbol}, ${transition.queueIn.priority}`;
+            result += `(${transition.queueIn.symbol}, ${transition.queueIn.priority})`;
         }
 
         return result
@@ -138,7 +148,7 @@ export class GameUI {
 
             context.fillText(this.displayTransition(transition), labelPosition.x, labelPosition.y);
 
-            hitContext.lineWidth = 10;
+            hitContext.lineWidth = 15;
             hitContext.strokeStyle = toHexCode(transitionIndex);
             hitContext.beginPath();
             for (let {x, y} of path) {
@@ -189,9 +199,11 @@ export class GameUI {
     setQueueTable(data: PQAData) {
         if (data.queueHidden) {
             this.queueTable.hidden = true;
+            this.queueHidden = true;
             return;
         }
         this.queueTable.hidden = false;
+        this.queueHidden = false;
         this.queueTable.innerHTML = "";
         this.setQueueTableHead(data);
         this.setQueueTableBody(data);
@@ -200,7 +212,8 @@ export class GameUI {
     setQueueTableHead(data: PQAData) {
         let head = this.queueTable.createTHead();
         let columnHeaders = head.insertRow();
-        columnHeaders.insertCell();
+        let cell = columnHeaders.insertCell();
+        cell.outerHTML = `<th>Priorities</th>`;
         for (let queueSymbol of data.queueAlphabet) {
             let cell = columnHeaders.insertCell();
             cell.outerHTML = `<th>${queueSymbol}</th>`;
@@ -238,7 +251,7 @@ export class GameUI {
 
 
     public showError(message: String) {
-        window.alert(message);
+        console.log(message);
     }
 
     public setActiveState(state: string) {
@@ -249,6 +262,82 @@ export class GameUI {
 
     public updateWord(word: string[]) {
         this.wordParagraph.innerText = word.join(" ");
+    }
+
+    createInProjectile(e: MouseEvent) {
+        let queueInType = this.game.getMostRecentlyAddedElement();
+        if (queueInType === null) { return; }
+        let inProjectile = document.createElement("div");
+        inProjectile.classList.add("projectile", "red");
+        let targetElem = this.queueTableFields.get([queueInType.symbol, queueInType.priority].toString())!;
+        targetElem.innerText = (parseInt(targetElem.innerText) - 1).toString();
+        let target = targetElem.getBoundingClientRect();
+        document.body.prepend(inProjectile);
+        console.log(e.x, e.y, target.x, target.y);
+        inProjectile.animate(
+            [
+                {
+                    transform: `translate(${e.x}px, ${e.y}px)`
+                },
+                {
+                    transform: `translate(${target.x + 0.5*target.width}px, ${target.y + 0.5*target.height}px)`
+                }
+            ],
+            {
+                duration: 500,
+            }
+        )
+
+        setTimeout(() => {
+            targetElem.innerText = (1 + parseInt(targetElem.innerText)).toString();
+        }, 500);
+
+        setTimeout(() => {
+            inProjectile.remove();
+        }, 1000);
+    }
+
+    createOutProjectile(e: MouseEvent) {
+        let queueOutType = this.game.getMostRecentlyRemovedElement();
+        if (queueOutType === null) { return; }
+        let outProjectile = document.createElement("div");
+        outProjectile.classList.add("projectile", "red");
+        let target = this.queueTableFields.get([queueOutType.symbol, queueOutType.priority].toString())!.getBoundingClientRect();
+        document.body.prepend(outProjectile);
+        console.log(e.x, e.y, target.x, target.y);
+        outProjectile.animate(
+            [
+                {
+                    transform: `translate(${target.x + 0.5*target.width}px, ${target.y + 0.5*target.height}px)`
+                },
+                {
+                    transform: `translate(${e.x}px, ${e.y}px)`
+                }
+            ],
+            {
+                duration: 500,
+            }
+        )
+
+        setTimeout(() => {
+            outProjectile.remove();
+        }, 1000);
+    }
+
+
+    public onTransitionClicked(e: MouseEvent) {
+        this.buttonClickSound.play();
+        this.createInProjectile(e);
+        this.createOutProjectile(e);
+    }
+
+    public onReset() {
+        this.resetSound.play();
+    }
+
+    public onAccept() {
+        this.acceptSound.play();
+        document.getElementById("accepted")!.hidden = false;
     }
 
 }

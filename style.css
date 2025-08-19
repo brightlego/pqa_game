@@ -1,0 +1,117 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: darkslategrey;
+}
+
+.automaton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+canvas#states {
+    border: 2px solid black;
+    margin: 10px;
+    user-select: none;
+}
+
+table#queue {
+    border-collapse: collapse;
+    border: 2px solid black;
+    font-size: 1.5em;
+    margin: 10px;
+}
+
+table#queue th, table#queue td {
+    border: 1px solid black;
+    width: 80px;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+table#queue th {
+    background-color: lightsteelblue;
+}
+
+table#queue td {
+    background-color: whitesmoke;
+}
+
+#game_window {
+    padding: 20px;
+    width: 1400px;
+    margin: auto;
+    background-color: slategrey;
+    border-radius: 10px;
+}
+
+#word {
+    font-size: 2em;
+    border-radius: 10px;
+    padding: 10px;
+    height: 40px;
+    vertical-align: middle;
+    background-color: whitesmoke;
+}
+
+button.reset {
+    font-size: 2em;
+    padding: 10px;
+    margin: 10px;
+}
+
+.popup-background {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.popup {
+    background: lightslategrey;
+    border-radius: 10px;
+    padding: 5px 20px 20px;
+    margin: auto;
+    width: fit-content;
+    position: relative;
+    top: 40%;
+    user-select: none;
+}
+
+.popup h2 {
+    font-size: 2em;
+
+}
+
+.popup p {
+    background-color: white;
+    color: black;
+    font-size: 1.3em;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.popup button {
+    margin: auto;
+    font-size: 1.5em;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.projectile {
+    position: absolute;
+    z-index: 50;
+    width: 10px;
+    height: 10px;
+    border-radius: 50px;
+}
+
+.projectile.red {
+    background-color: red;
+}

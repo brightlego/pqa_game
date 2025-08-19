@@ -6,15 +6,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="game_window">
-
-        <canvas id="states" height="500" width="700"></canvas>
-        <canvas id="stateHitRegion" height="700" width="700" hidden="hidden"></canvas>
-        <table id="queue"></table>
-        <p id="word"></p>
-        <button onclick="window.Game.instance.resetCurrentPQA()">Reset</button>
-
+    <div id="accepted" class="popup-background" hidden="hidden">
+        <div class="popup">
+            <h2>Congratulations!</h2>
+            <p>Congratulations, the automaton has accepted the input!</p>
+            <div style="text-align: center">
+                <button onclick="document.getElementById('accepted').hidden = true">Ok</button>
+            </div>
+        </div>
     </div>
+    <div id="game_window">
+        <button onclick="window.Game.instance.resetCurrentPQA()" class="reset">Reset</button>
+        <div class="automaton">
+            <canvas id="states" height="500" width="700"></canvas>
+            <table id="queue"></table>
+        </div>
+        <p id="word"></p>
+    </div>
+
+    <canvas id="stateHitRegion" height="700" width="700" hidden="hidden"></canvas>
     <script src="dist/app.js"></script>
 </body>
 </html>

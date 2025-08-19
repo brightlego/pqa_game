@@ -36,6 +36,9 @@ class RunState {
     word: number[];
     automaton: PQAInternal;
 
+    mostRecentlyAddedElement: QueueElement | null = null;
+    mostRecentlyRemovedElement: QueueElement | null = null;
+
     constructor(automaton: PQAInternal, word: number[]) {
         this.maxPriority = -Infinity;
         this.queue = new Map();
@@ -58,6 +61,7 @@ class RunState {
         if (count === 1) {
             this.updateMaxPriority()
         }
+        this.mostRecentlyRemovedElement = elem;
         return true;
     }
 
@@ -83,17 +87,20 @@ class RunState {
             this.maxPriority = elem.priority;
         }
         map.set(elem.symbol, count + 1);
+        this.mostRecentlyAddedElement = elem;
     }
 
     public tryRunTransition(transitionIdx: TransitionIdx): boolean {
-        console.log(`Trying to run transition ${transitionIdx}`)
+        this.mostRecentlyRemovedElement = null;
+        this.mostRecentlyAddedElement = null;
+
         if (transitionIdx >= this.automaton.transitionCount || transitionIdx < 0) { return false; }
         let transition = this.automaton.transitions[transitionIdx];
         if (transition.stateFrom !== this.state) {
             console.warn(`From state ${transition.stateFrom} is not ${this.state}`);
             return false;
         }
-        if (transition.input !== null && this.word.length > 0 && transition.input != this.word[this.word.length - 1]) {
+        if ((transition.input !== null && this.word.length > 0 && transition.input != this.word[this.word.length - 1]) || (transition.input !== null && this.word.length === 0)) {
             console.warn(`Input ${transition.input} does not match symbol ${this.word[this.word.length - 1]}`);
             return false;
         }
@@ -113,7 +120,7 @@ class RunState {
         if (transition.stateFrom !== this.state) {
             return false;
         }
-        if (transition.input !== null && this.word.length > 0 && transition.input != this.word[this.word.length - 1]) {
+        if ((transition.input !== null && this.word.length > 0 && transition.input != this.word[this.word.length - 1]) || (transition.input !== null && this.word.length === 0)) {
             return false;
         }
         return !(transition.queueOut !== null && !this.canRemoveElement(transition.queueOut));
@@ -123,6 +130,14 @@ class RunState {
 
     public canAccept(): boolean {
         return this.word.length === 0 && this.automaton.acceptingStates.has(this.state);
+    }
+
+    public getMostRecentlyAddedElement(): QueueElement | null {
+        return this.mostRecentlyAddedElement;
+    }
+
+    public getMostRecentlyRemovedElement(): QueueElement | null {
+        return this.mostRecentlyRemovedElement;
     }
 }
 
@@ -264,5 +279,23 @@ export class PQARun<Q, Σ, Γ> {
 
     public canAccept(): boolean {
         return this.runState.canAccept()
+    }
+
+    public getMostRecentlyAddedElement(): { symbol: Γ, priority: number } | null {
+        let res = this.runState.getMostRecentlyAddedElement();
+        if (res === null) { return null; }
+
+        let { symbol, priority } = res;
+
+        return {symbol: this.queueSymbols[symbol], priority};
+    }
+
+    public getMostRecentlyRemovedElement(): { symbol: Γ, priority: number } | null {
+        let res = this.runState.getMostRecentlyRemovedElement();
+        if (res === null) { return null; }
+
+        let { symbol, priority } = res;
+
+        return {symbol: this.queueSymbols[symbol], priority};
     }
 }
