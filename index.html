@@ -16,12 +16,21 @@
         </div>
     </div>
     <div id="game_window">
+        <label for="level_select">Levels:</label>
+        <select id="level_select" onchange="window.Game.instance.onLevelSelect(this.value)">
+            <option value="">---Select Level----</option>
+        </select>
         <button onclick="window.Game.instance.resetCurrentPQA()" class="reset">Reset</button>
+        <h1 id="level_name"></h1>
         <div class="automaton">
             <canvas id="states" height="500" width="700"></canvas>
             <table id="queue"></table>
         </div>
         <p id="word"></p>
+        <div class="prev_next">
+            <button value="" id="prev" onclick="window.Game.instance.onLevelSelect(this.value)">Previous</button>
+            <button value="" id="next" onclick="window.Game.instance.onLevelSelect(this.value)">Next</button>
+        </div>
     </div>
 
     <canvas id="stateHitRegion" height="700" width="700" hidden="hidden"></canvas>

@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "name": "Level 3",
+    "group": "NFA",
+    "groupIndex": 2,
+    "id": "level3"
+  },
+
+  "states": [
+    {
+      "name": "q0",
+      "position": { "x": 200, "y": 250},
+      "isAccepting": false
+    },
+    {
+      "name": "q1",
+      "position": { "x":  350, "y":  150},
+      "isAccepting": false
+    },
+    {
+      "name": "q2",
+      "position": { "x":  500, "y":  150},
+      "isAccepting": true
+    },
+    {
+      "name": "q3",
+      "position": { "x":  350, "y":  350},
+      "isAccepting": false
+    }
+  ],
+  "inputAlphabet": [],
+  "queueAlphabet": [],
+  "priorities": [],
+  "initialState": "q0",
+  "transitions": [
+    {
+      "stateFrom": "q0",
+      "stateTo": "q1",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 220, "y": 230}, {"x": 320, "y":  158}],
+      "labelPosition": {"x": 270, "y": 165 }
+    },
+    {
+      "stateFrom": "q0",
+      "stateTo": "q3",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 220, "y":  270}, {"x": 328, "y": 328}],
+      "labelPosition": {"x": 270, "y": 280}
+    },
+    {
+      "stateFrom": "q1",
+      "stateTo": "q2",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 370, "y": 150}, {"x": 468, "y":  150}],
+      "labelPosition": {"x": 420, "y": 135 }
+    }
+  ],
+  "word": [],
+  "hideQueue": true
+}

@@ -17,8 +17,12 @@ export class GameUI {
     buttonClickSound: HTMLAudioElement = new Audio("sounds/219069__annabloom__click1.wav");
     resetSound: HTMLAudioElement = new Audio("sounds/54405__korgms2000b__button-click.wav");
     acceptSound: HTMLAudioElement = new Audio("sounds/66136__aji__ding30603-spedup.wav");
+    levelTitle: HTMLHeadingElement;
     game: Game;
-
+    levelSelect: HTMLSelectElement;
+    levelSelectGroups: Map<string, HTMLOptGroupElement>;
+    previousButton: HTMLButtonElement;
+    nextButton: HTMLButtonElement;
 
 
     public constructor(game: Game) {
@@ -26,8 +30,14 @@ export class GameUI {
         this.queueTable = document.getElementById("queue") as HTMLTableElement;
         this.hitRegionCanvas = document.getElementById("stateHitRegion") as HTMLCanvasElement;
         this.wordParagraph = document.getElementById("word") as HTMLParagraphElement;
+        this.levelSelect = document.getElementById("level_select") as HTMLSelectElement;
+        this.previousButton = document.getElementById("prev") as HTMLButtonElement;
+        this.nextButton = document.getElementById("next") as HTMLButtonElement;
+        this.levelTitle = document.getElementById("level_name") as HTMLHeadingElement;
+        this.levelSelectGroups = new Map();
         this.queueTableFields = new Map();
         this.game = game;
+        this.clearCanvas();
     }
 
     public setPQA(pqa: PQARun<string, string, string>) {
@@ -338,6 +348,42 @@ export class GameUI {
     public onAccept() {
         this.acceptSound.play();
         document.getElementById("accepted")!.hidden = false;
+    }
+
+    public addLevel(levelName: string, group: string, id: string) {
+        if (!this.levelSelectGroups.has(group)) {
+            let groupElement = document.createElement("optgroup");
+            groupElement.label = group;
+            this.levelSelect.appendChild(groupElement);
+            this.levelSelectGroups.set(group, groupElement);
+        }
+        let groupElement = this.levelSelectGroups.get(group)!;
+        let option: HTMLOptionElement = document.createElement("option");
+        option.value = id;
+        option.innerText = levelName;
+        groupElement.appendChild(option);
+    }
+
+    public setPrevNext(prev: string | null, next: string | null) {
+        if (prev === null) {
+            this.previousButton.disabled = true;
+            this.previousButton.value = "";
+        } else {
+            this.previousButton.disabled = false;
+            this.previousButton.value = prev;
+        }
+
+        if (next === null) {
+            this.nextButton.disabled = true;
+            this.nextButton.value = "";
+        } else {
+            this.nextButton.disabled = false;
+            this.nextButton.value = next;
+        }
+    }
+
+    public setLevelName(name: string) {
+        this.levelTitle.innerText = name;
     }
 
 }

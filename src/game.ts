@@ -1,20 +1,21 @@
 import {PQARun} from "./PQA";
 import {PQAData} from "./PQAData";
 import {GameUI} from "./gameUI";
+import {LevelData} from "./LevelData";
 
 export class Game {
     pqa: PQARun<string, string, string> | null;
     ui: GameUI;
+    levelData: LevelData;
     static instance: Game | null = null;
 
     constructor() {
         this.ui = new GameUI(this);
+        this.levelData = new LevelData(this.ui);
         this.pqa = null;
         Game.instance = this;
     }
 
-
-    
     public loadPQA(pqaData: PQAData) {
         this.pqa = pqaData.createPQA();
         this.ui.setPQA(this.pqa);
@@ -89,6 +90,17 @@ export class Game {
             return null;
         }
         return this.pqa.getMostRecentlyRemovedElement()
+    }
+
+    public onLevelSelect(value: string) {
+        if (value === "") { return; }
+        let data = this.levelData.getLevelData(value);
+        let prev = this.levelData.getPrevious(value);
+        let next = this.levelData.getNext(value);
+        let name = this.levelData.getName(value);
+        this.ui.setPrevNext(prev, next);
+        this.ui.setLevelName(name);
+        this.loadPQA(data);
     }
 }
 

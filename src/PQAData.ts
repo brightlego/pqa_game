@@ -2,7 +2,7 @@ import {PQARun, Transition} from "./PQA";
 
 type position = { x : number, y : number }
 
-type dataFormat = {
+export type dataFormat = {
     states: { name: string, position: position, isAccepting: boolean }[],
     inputAlphabet: string[],
     queueAlphabet: string[],
@@ -52,8 +52,14 @@ export class PQAData {
 
     }
      */
-    public constructor(data: string) {
-        let value = JSON.parse(data) as dataFormat;
+    public constructor(data: string | dataFormat) {
+
+        let value: dataFormat;
+        if (typeof data === "string") {
+            value = JSON.parse(data) as dataFormat;
+        } else {
+            value = data;
+        }
         this.states = new Map();
         for (let state of value.states) {
             this.states.set(state.name, { position: { x: state.position.x, y: state.position.y }, isAccepting: state.isAccepting })
