@@ -6,34 +6,36 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="accepted" class="popup-background" hidden="hidden">
+    <dialog id="accepted" class="popup-background">
         <div class="popup">
             <h2>Congratulations!</h2>
             <p>Congratulations, the automaton has accepted the input!</p>
             <div style="text-align: center">
-                <button onclick="document.getElementById('accepted').hidden = true">Ok</button>
+                <form method="dialog">
+                    <button>Ok</button>
+                </form>
             </div>
         </div>
-    </div>
-    <div id="game_window">
-        <label for="level_select">Levels:</label>
-        <select id="level_select" onchange="window.Game.instance.onLevelSelect(this.value)">
-            <option value="">---Select Level----</option>
-        </select>
-        <button onclick="window.Game.instance.resetCurrentPQA()" class="reset">Reset</button>
-        <h1 id="level_name"></h1>
+    </dialog>
+    <nav class="sidebar">
+        <h1>Levels</h1>
+        <ol id="levels"></ol>
+    </nav>
+    <main id="game_window">
+        <h1 id="level_name">Please Select a Level</h1>
         <div class="automaton">
-            <canvas id="states" height="500" width="700"></canvas>
+            <canvas id="states"></canvas>
             <table id="queue"></table>
         </div>
         <p id="word"></p>
         <div class="prev_next">
             <button value="" id="prev" onclick="window.Game.instance.onLevelSelect(this.value)">Previous</button>
+            <button onclick="window.Game.instance.resetCurrentPQA()" class="reset">Reset</button>
             <button value="" id="next" onclick="window.Game.instance.onLevelSelect(this.value)">Next</button>
         </div>
-    </div>
+    </main>
 
-    <canvas id="stateHitRegion" height="700" width="700" hidden="hidden"></canvas>
+    <canvas id="stateHitRegion" hidden="hidden"></canvas>
     <script src="dist/app.js"></script>
 </body>
 </html>

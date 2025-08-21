@@ -1,4 +1,10 @@
 {
+  "metadata": {
+    "name": "Test 1",
+    "group": "Test",
+    "groupIndex": 0,
+    "id": "test1"
+  },
   "states": [
     {
       "name": "q1",

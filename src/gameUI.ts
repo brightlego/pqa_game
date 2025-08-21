@@ -1,10 +1,8 @@
-import {PQARun, Transition} from "./PQA";
+import {PQARun} from "./PQA";
 import {PQAData} from "./PQAData";
 import {Game} from "./game";
+import {StateDiagram} from "./StateDiagram";
 
-function toHexCode(n: number): string {
-    return `#${n.toString(16).padStart(6, "0")}`;
-}
 
 export class GameUI {
     stateCanvas: HTMLCanvasElement;
@@ -19,10 +17,11 @@ export class GameUI {
     acceptSound: HTMLAudioElement = new Audio("sounds/66136__aji__ding30603-spedup.wav");
     levelTitle: HTMLHeadingElement;
     game: Game;
-    levelSelect: HTMLSelectElement;
-    levelSelectGroups: Map<string, HTMLOptGroupElement>;
     previousButton: HTMLButtonElement;
     nextButton: HTMLButtonElement;
+    stateDiagram: StateDiagram;
+    levelGroupList: HTMLOListElement;
+    levelGroups: Map<string, HTMLOListElement>;
 
 
     public constructor(game: Game) {
@@ -30,14 +29,15 @@ export class GameUI {
         this.queueTable = document.getElementById("queue") as HTMLTableElement;
         this.hitRegionCanvas = document.getElementById("stateHitRegion") as HTMLCanvasElement;
         this.wordParagraph = document.getElementById("word") as HTMLParagraphElement;
-        this.levelSelect = document.getElementById("level_select") as HTMLSelectElement;
         this.previousButton = document.getElementById("prev") as HTMLButtonElement;
         this.nextButton = document.getElementById("next") as HTMLButtonElement;
         this.levelTitle = document.getElementById("level_name") as HTMLHeadingElement;
-        this.levelSelectGroups = new Map();
+        this.levelGroupList = document.getElementById("levels") as HTMLOListElement;
+        this.levelGroups = new Map();
         this.queueTableFields = new Map();
         this.game = game;
-        this.clearCanvas();
+        this.stateDiagram = new StateDiagram();
+        this.stateDiagram.clearCanvas();
     }
 
     public setPQA(pqa: PQARun<string, string, string>) {
@@ -50,17 +50,6 @@ export class GameUI {
         this.updatePriorityQueue(pqa.queue());
         this.updateWord(pqa.word);
         this.setActiveState(pqa.state);
-    }
-
-    public clearCanvas() {
-        let context = this.stateCanvas.getContext("2d")!;
-        let hitContext = this.hitRegionCanvas.getContext("2d")!;
-        context.clearRect(0, 0, this.stateCanvas.width, this.stateCanvas.height);
-        hitContext.clearRect(0, 0, this.hitRegionCanvas.width, this.hitRegionCanvas.height);
-        context.fillStyle = "white";
-        hitContext.fillStyle = "white";
-        context.fillRect(0, 0, this.stateCanvas.width, this.stateCanvas.height);
-        hitContext.fillRect(0, 0, this.hitRegionCanvas.width, this.hitRegionCanvas.height);
     }
 
     public getTransitionIdx(event: MouseEvent): number {
@@ -88,132 +77,16 @@ export class GameUI {
         }
     }
 
-    // Taken from https://stackoverflow.com/questions/808826/drawing-an-arrow-using-html-canvas
-    canvas_arrow(context: CanvasRenderingContext2D, fromx: number, fromy: number, tox: number, toy: number) {
-        let headlen = 10; // length of head in pixels
-        let dx = tox - fromx;
-        let dy = toy - fromy;
-        let angle = Math.atan2(dy, dx);
-        context.beginPath();
-        context.moveTo(fromx, fromy);
-        context.lineTo(tox, toy);
-        context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
-        context.moveTo(tox, toy);
-        context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
-        context.stroke();
-        context.closePath();
-    }
-
-    displayTransition(transition: Transition<string, string, string>) {
-        let result = "";
-        if (transition.input === null) {
-            result += 'ε'
-        } else {
-            result += transition.input;
-        }
-
-        if (this.queueHidden) {
-            return result;
-        }
-
-        result += " : ";
-
-        if (transition.queueOut === null) {
-            result += '∅'
-        } else {
-            result += `(${transition.queueOut.symbol}, ${transition.queueOut.priority})`;
-        }
-
-        result += " ↦ "
-
-        if (transition.queueIn === null) {
-            result += '∅'
-        } else {
-            result += `(${transition.queueIn.symbol}, ${transition.queueIn.priority})`;
-        }
-
-        return result
-    }
-
-    drawTransitions(data: PQAData) {
-        let context = this.stateCanvas.getContext("2d")!;
-        let hitContext = this.hitRegionCanvas.getContext("2d")!;
-        let transitionIndex = 0;
-        context.strokeStyle = "black";
-
-        for (let {transition, path, labelPosition} of data.transitions) {
-            context.lineWidth = 6;
-            context.beginPath();
-            for (let {x, y} of path) {
-                context.lineTo(x, y);
-            }
-            context.stroke();
-            context.closePath();
-            this.canvas_arrow(context, path[path.length - 2].x, path[path.length - 2].y, path[path.length - 1].x, path[path.length - 1].y);
-
-            context.fillStyle = "black";
-            context.font = "16px Arial";
-            context.textAlign = "left";
-            context.textBaseline = "middle";
-
-            context.fillText(this.displayTransition(transition), labelPosition.x, labelPosition.y);
-
-            hitContext.lineWidth = 25;
-            hitContext.strokeStyle = toHexCode(transitionIndex);
-            hitContext.beginPath();
-            for (let {x, y} of path) {
-                hitContext.lineTo(x, y);
-            }
-            hitContext.stroke();
-            hitContext.closePath();
-            transitionIndex += 1;
-        }
-    }
-
-
-    drawStates(activeState: string, data: PQAData) {
-        let context = this.stateCanvas.getContext("2d")!;
-        for (let [state, {position, isAccepting}] of data.states) {
-            if (state === activeState) {
-                context.fillStyle = "yellow"
-                context.strokeStyle = "red";
-            } else {
-                context.fillStyle = "white";
-                context.strokeStyle = "black";
-            }
-            context.lineWidth = 2;
-            context.beginPath();
-            context.arc(position.x, position.y, 30, 0, 2*Math.PI);
-            context.fill();
-            context.stroke();
-            context.closePath();
-
-            context.beginPath();
-            if (isAccepting) {
-                context.arc(position.x, position.y, 25, 0, 2*Math.PI);
-                context.stroke();
-            }
-            context.closePath();
-
-            context.fillStyle = "black";
-            context.font = "16px Arial";
-            context.textAlign = "center";
-            context.textBaseline = "middle";
-            context.fillText(state, position.x, position.y);
-        }
-    }
-
-
-
-
     setQueueTable(data: PQAData) {
         if (data.queueHidden) {
             this.queueTable.hidden = true;
             this.queueHidden = true;
+            this.stateDiagram.setQueueHidden(true);
             return;
         }
         this.queueTable.hidden = false;
         this.queueHidden = false;
+        this.stateDiagram.setQueueHidden(false);
         this.queueTable.innerHTML = "";
         this.setQueueTableHead(data);
         this.setQueueTableBody(data);
@@ -265,9 +138,7 @@ export class GameUI {
     }
 
     public setActiveState(state: string) {
-        this.clearCanvas();
-        this.drawTransitions(this.data!);
-        this.drawStates(state, this.data!);
+        this.stateDiagram.update(this.data!, state);
     }
 
     public updateWord(word: string[]) {
@@ -294,17 +165,18 @@ export class GameUI {
                 }
             ],
             {
-                duration: 500,
+                duration: 200,
             }
         )
 
         setTimeout(() => {
             targetElem.innerText = (1 + parseInt(targetElem.innerText)).toString();
-        }, 500);
+            inProjectile.style.transform = `translate(${target.x + 0.5*target.width}px, ${target.y + 0.5*target.height}px)`;
+        }, 200);
 
         setTimeout(() => {
             inProjectile.remove();
-        }, 1000);
+        }, 300);
     }
 
     createOutProjectile(e: MouseEvent) {
@@ -325,13 +197,17 @@ export class GameUI {
                 }
             ],
             {
-                duration: 500,
+                duration: 200,
             }
         )
 
         setTimeout(() => {
+            outProjectile.style.transform = `translate(${e.x}px, ${e.y}px)`;
+        }, 200);
+
+        setTimeout(() => {
             outProjectile.remove();
-        }, 1000);
+        }, 300);
     }
 
 
@@ -347,21 +223,27 @@ export class GameUI {
 
     public onAccept() {
         this.acceptSound.play();
-        document.getElementById("accepted")!.hidden = false;
+        (document.getElementById("accepted")! as HTMLDialogElement).showModal();
     }
 
     public addLevel(levelName: string, group: string, id: string) {
-        if (!this.levelSelectGroups.has(group)) {
-            let groupElement = document.createElement("optgroup");
-            groupElement.label = group;
-            this.levelSelect.appendChild(groupElement);
-            this.levelSelectGroups.set(group, groupElement);
+        if (!this.levelGroups.has(group)) {
+            let groupElement = document.createElement("li");
+            let header = document.createElement("h2");
+            header.innerText = group;
+            groupElement.appendChild(header);
+            let list = document.createElement("ol");
+            groupElement.appendChild(list);
+            this.levelGroupList.appendChild(groupElement);
+            this.levelGroups.set(group, list);
         }
-        let groupElement = this.levelSelectGroups.get(group)!;
-        let option: HTMLOptionElement = document.createElement("option");
-        option.value = id;
-        option.innerText = levelName;
-        groupElement.appendChild(option);
+        let groupElement = this.levelGroups.get(group)!;
+        let listElem = document.createElement("li");
+        let button = document.createElement("button");
+        button.innerText = levelName;
+        button.onclick = () => { Game.instance?.onLevelSelect(id) }
+        listElem.appendChild(button);
+        groupElement.appendChild(listElem);
     }
 
     public setPrevNext(prev: string | null, next: string | null) {

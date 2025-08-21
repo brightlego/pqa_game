@@ -1,6 +1,7 @@
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: darkslategrey;
+    background-color: #faf8f5;
+    margin: 0;
 }
 
 .automaton {
@@ -14,22 +15,23 @@ canvas#states {
     border: 2px solid black;
     margin: 10px;
     user-select: none;
+    width: 70%;
 }
 
 table#queue {
     border-collapse: collapse;
     border: 2px solid black;
-    font-size: 1.5em;
-    margin: 10px;
+    font-size: 1em;
+    margin: 0.5vw;
 }
 
 table#queue th, table#queue td {
     border: 1px solid black;
-    width: 80px;
-    height: 50px;
+    width: 3vw;
+    height: 1.5vw;
     text-align: center;
     vertical-align: middle;
-    padding: 10px;
+    padding: 0.5vw;
 }
 
 table#queue th {
@@ -42,10 +44,10 @@ table#queue td {
 
 #game_window {
     padding: 20px;
-    width: 1400px;
-    margin: auto;
-    background-color: slategrey;
-    border-radius: 10px;
+    width: 50%;
+    margin: 1vh auto;
+    background-color: white;
+    border: 2px solid black;
 }
 
 #word {
@@ -57,11 +59,6 @@ table#queue td {
     background-color: whitesmoke;
 }
 
-button.reset {
-    font-size: 2em;
-    padding: 10px;
-    margin: 10px;
-}
 
 .popup-background {
     position: absolute;
@@ -74,7 +71,8 @@ button.reset {
 }
 
 .popup {
-    background: lightslategrey;
+    background: white;
+    border: 2px solid black;
     border-radius: 10px;
     padding: 5px 20px 20px;
     margin: auto;
@@ -112,6 +110,49 @@ button.reset {
     border-radius: 50px;
 }
 
+.prev_next {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
+
+#game_window button {
+    font-size: 1.5em;
+    padding: 10px 20px;
+    border-radius: 0;
+}
+
+.prev_next #prev {
+    float: left;
+}
+
+.prev_next #next {
+    float: right;
+}
+
 .projectile.red {
     background-color: red;
+}
+
+.sidebar {
+    float: left;
+}
+
+nav {
+    background-color: white;
+    border: 2px solid black;
+    padding: 10px;
+    margin: 10px;
+}
+
+nav ol {
+    list-style-type: none;
+}
+
+nav button {
+    font-size: 1.5em;
+    padding: 10px 20px;
+    border-radius: 0;
+    width: 10vw;
+    border: 0
 }
