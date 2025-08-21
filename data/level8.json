@@ -1,0 +1,251 @@
+{
+  "metadata": {
+    "name": "Level 8",
+    "group": "NFA",
+    "groupIndex": 7,
+    "id": "level8"
+  },
+
+  "states": [
+    {
+      "name": "q0",
+      "position": { "x": 150, "y": 150},
+      "isAccepting": false
+    },
+    {
+      "name": "q1",
+      "position": { "x":  250, "y":  150},
+      "isAccepting": false
+    },
+    {
+      "name": "q2",
+      "position": { "x":  350, "y":  150},
+      "isAccepting": false
+    },
+    {
+      "name": "q3",
+      "position": { "x":  450, "y":  150},
+      "isAccepting": false
+    },
+    {
+      "name": "q4",
+      "position": { "x":  150, "y":  250},
+      "isAccepting": false
+    },
+    {
+      "name": "q5",
+      "position": { "x":  250, "y":  250},
+      "isAccepting": false
+    },
+    {
+      "name": "q6",
+      "position": { "x":  350, "y":  250},
+      "isAccepting": false
+    },
+    {
+      "name": "q7",
+      "position": { "x":  450, "y":  250},
+      "isAccepting": false
+    },
+    {
+      "name": "q8",
+      "position": { "x":  550, "y":  250},
+      "isAccepting": true
+    },
+    {
+      "name": "q9",
+      "position": { "x":  150, "y":  350},
+      "isAccepting": false
+    },
+    {
+      "name": "qA",
+      "position": { "x":  250, "y":  350},
+      "isAccepting": false
+    },
+    {
+      "name": "qB",
+      "position": { "x":  350, "y":  350},
+      "isAccepting": false
+    },
+    {
+      "name": "qC",
+      "position": { "x":  450, "y":  350},
+      "isAccepting": false
+    },
+    {
+      "name": "qD",
+      "position": { "x":  550, "y":  350},
+      "isAccepting": false
+    }
+  ],
+  "inputAlphabet": ["a", "b", "c"],
+  "queueAlphabet": [],
+  "priorities": [],
+  "initialState": "q0",
+  "transitions": [
+    {
+      "stateFrom": "q0",
+      "stateTo": "q1",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 178, "y": 150}, {"x": 218, "y":  150}],
+      "labelPosition": {"x": 195, "y": 130 }
+    },
+    {
+      "stateFrom": "q1",
+      "stateTo": "q2",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 278, "y": 150}, {"x": 318, "y":  150}],
+      "labelPosition": {"x": 295, "y": 130 }
+    },
+    {
+      "stateFrom": "q3",
+      "stateTo": "q2",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 422, "y": 150}, {"x": 382, "y":  150}],
+      "labelPosition": {"x": 395, "y": 130 }
+    },
+    {
+      "stateFrom": "q1",
+      "stateTo": "q5",
+      "input": "a",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 250, "y": 178}, {"x": 250, "y":  218}],
+      "labelPosition": {"x": 225, "y": 200 }
+    },
+    {
+      "stateFrom": "q2",
+      "stateTo": "q6",
+      "input": "b",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 350, "y": 178}, {"x": 350, "y":  218}],
+      "labelPosition": {"x": 325, "y": 200 }
+    },
+    {
+      "stateFrom": "q7",
+      "stateTo": "q3",
+      "input": "c",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 450, "y": 222}, {"x": 450, "y":  182}],
+      "labelPosition": {"x": 465, "y": 200 }
+    },
+    {
+      "stateFrom": "q5",
+      "stateTo": "q4",
+      "input": "a",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 222, "y": 250}, {"x": 182, "y":  250}],
+      "labelPosition": {"x": 195, "y": 230 }
+    },
+    {
+      "stateFrom": "q6",
+      "stateTo": "q5",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 322, "y": 250}, {"x": 282, "y":  250}],
+      "labelPosition": {"x": 295, "y": 230 }
+    },
+    {
+      "stateFrom": "q6",
+      "stateTo": "q7",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 378, "y": 250}, {"x": 418, "y":  250}],
+      "labelPosition": {"x": 395, "y": 230 }
+    },
+    {
+      "stateFrom": "q7",
+      "stateTo": "q8",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 478, "y": 250}, {"x": 518, "y":  250}],
+      "labelPosition": {"x": 495, "y": 230 }
+    },
+    {
+      "stateFrom": "q4",
+      "stateTo": "q9",
+      "input": "a",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 150, "y": 278}, {"x": 150, "y":  318}],
+      "labelPosition": {"x": 165, "y": 300 }
+    },
+    {
+      "stateFrom": "qB",
+      "stateTo": "q6",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 350, "y": 322}, {"x": 350, "y":  282}],
+      "labelPosition": {"x": 325, "y": 300 }
+    },
+    {
+      "stateFrom": "q7",
+      "stateTo": "qC",
+      "input": "b",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 450, "y": 278}, {"x": 450, "y":  318}],
+      "labelPosition": {"x": 425, "y": 300 }
+    },
+    {
+      "stateFrom": "q8",
+      "stateTo": "qD",
+      "input": "a",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 550, "y": 278}, {"x": 550, "y":  318}],
+      "labelPosition": {"x": 525, "y": 300 }
+    },
+    {
+      "stateFrom": "q9",
+      "stateTo": "qA",
+      "input": "b",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 178, "y": 350}, {"x": 218, "y":  350}],
+      "labelPosition": {"x": 195, "y": 330 }
+    },
+    {
+      "stateFrom": "qA",
+      "stateTo": "qB",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 278, "y": 350}, {"x": 318, "y":  350}],
+      "labelPosition": {"x": 295, "y": 330 }
+    },
+    {
+      "stateFrom": "qC",
+      "stateTo": "qB",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 422, "y": 350}, {"x": 382, "y":  350}],
+      "labelPosition": {"x": 395, "y": 330 }
+    },
+    {
+      "stateFrom": "qD",
+      "stateTo": "qC",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 522, "y": 350}, {"x": 482, "y":  350}],
+      "labelPosition": {"x": 495, "y": 330 }
+    }
+  ],
+  "word": ["b", "c", "b", "a", "a", "b", "a", "b", "c", "b"],
+  "hideQueue": true
+}

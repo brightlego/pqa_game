@@ -1,0 +1,80 @@
+{
+  "metadata": {
+    "name": "Level 7",
+    "group": "NFA",
+    "groupIndex": 6,
+    "id": "level7"
+  },
+
+  "states": [
+    {
+      "name": "q0",
+      "position": { "x": 200, "y": 250},
+      "isAccepting": false
+    },
+    {
+      "name": "q1",
+      "position": { "x":  350, "y":  150},
+      "isAccepting": false
+    },
+    {
+      "name": "q2",
+      "position": { "x":  500, "y":  150},
+      "isAccepting": true
+    },
+    {
+      "name": "q3",
+      "position": { "x":  350, "y":  350},
+      "isAccepting": false
+    },
+    {
+      "name": "q4",
+      "position": { "x":  500, "y":  350},
+      "isAccepting": true
+    }
+  ],
+  "inputAlphabet": ["a", "b"],
+  "queueAlphabet": [],
+  "priorities": [],
+  "initialState": "q0",
+  "transitions": [
+    {
+      "stateFrom": "q0",
+      "stateTo": "q1",
+      "input": "a",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 223, "y": 234}, {"x": 323, "y":  168}],
+      "labelPosition": {"x": 256, "y": 186 }
+    },
+    {
+      "stateFrom": "q1",
+      "stateTo": "q2",
+      "input": "b",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 378, "y":  150}, {"x": 468, "y": 150}],
+      "labelPosition": {"x": 420, "y": 130 }
+    },
+    {
+      "stateFrom": "q0",
+      "stateTo": "q3",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 223, "y": 266}, {"x": 323, "y":  332}],
+      "labelPosition": {"x": 284, "y": 286 }
+    },
+    {
+      "stateFrom": "q3",
+      "stateTo": "q4",
+      "input": "a",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 378, "y": 350}, {"x": 468, "y": 350}],
+      "labelPosition": {"x": 420, "y": 330 }
+    }
+  ],
+  "word": ["a", "b"],
+  "hideQueue": true
+}

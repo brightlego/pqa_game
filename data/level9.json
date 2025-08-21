@@ -1,0 +1,208 @@
+{
+  "metadata": {
+    "name": "Level 9",
+    "group": "NFA",
+    "groupIndex": 8,
+    "id": "level9"
+  },
+
+  "states": [
+    {
+      "name": "q0",
+      "position": { "x": 200, "y": 100},
+      "isAccepting": false
+    },
+    {
+      "name": "q1",
+      "position": { "x": 350, "y": 100},
+      "isAccepting": false
+    },
+    {
+      "name": "q2",
+      "position": { "x": 500, "y": 100},
+      "isAccepting": false
+    },
+    {
+      "name": "q3",
+      "position": { "x": 200, "y":  250},
+      "isAccepting": false
+    },
+    {
+      "name": "q4",
+      "position": { "x": 350, "y":  250},
+      "isAccepting": false
+    },
+    {
+      "name": "q5",
+      "position": { "x":  500, "y":  250},
+      "isAccepting": false
+    },
+    {
+      "name": "q6",
+      "position": { "x":  200, "y":  400},
+      "isAccepting": false
+    },
+    {
+      "name": "q7",
+      "position": { "x":  350, "y":  400},
+      "isAccepting": false
+    },
+    {
+      "name": "q8",
+      "position": { "x":  500, "y":  400},
+      "isAccepting": true
+    }
+  ],
+  "inputAlphabet": ["0", "1", "2"],
+  "queueAlphabet": [],
+  "priorities": [],
+  "initialState": "q0",
+  "transitions": [
+    {
+      "stateFrom": "q0",
+      "stateTo": "q1",
+      "input": "1",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 228, "y": 100}, {"x": 318, "y":  100}],
+      "labelPosition": {"x": 270, "y": 80 }
+    },
+    {
+      "stateFrom": "q2",
+      "stateTo": "q1",
+      "input": "0",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 472, "y": 100}, {"x": 382, "y":  100}],
+      "labelPosition": {"x": 420, "y": 80 }
+    },
+    {
+      "stateFrom": "q0",
+      "stateTo": "q3",
+      "input": "1",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 200, "y": 128}, {"x": 200, "y":  218}],
+      "labelPosition": {"x": 175, "y": 175 }
+    },
+    {
+      "stateFrom": "q1",
+      "stateTo": "q4",
+      "input": "0",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 350, "y": 128}, {"x": 350, "y":  218}],
+      "labelPosition": {"x": 325, "y": 175 }
+    },
+    {
+      "stateFrom": "q5",
+      "stateTo": "q2",
+      "input": "1",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 500, "y": 222}, {"x": 500, "y":  132}],
+      "labelPosition": {"x": 515, "y": 175 }
+    },
+    {
+      "stateFrom": "q4",
+      "stateTo": "q3",
+      "input": "1",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 322, "y": 250}, {"x": 232, "y":  250}],
+      "labelPosition": {"x": 270, "y": 230 }
+    },
+    {
+      "stateFrom": "q4",
+      "stateTo": "q5",
+      "input": "1",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 378, "y": 250}, {"x": 468, "y":  250}],
+      "labelPosition": {"x": 420, "y": 270 }
+    },
+    {
+      "stateFrom": "q3",
+      "stateTo": "q6",
+      "input": "0",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 200, "y": 278}, {"x": 200, "y":  368}],
+      "labelPosition": {"x": 175, "y": 325 }
+    },
+    {
+      "stateFrom": "q7",
+      "stateTo": "q4",
+      "input": "0",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 350, "y": 372}, {"x": 350, "y":  282}],
+      "labelPosition": {"x": 365, "y": 325 }
+    },
+    {
+      "stateFrom": "q5",
+      "stateTo": "q8",
+      "input": "2",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 500, "y": 278}, {"x": 500, "y":  368}],
+      "labelPosition": {"x": 475, "y": 325 }
+    },
+    {
+      "stateFrom": "q6",
+      "stateTo": "q7",
+      "input": "0",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 228, "y": 400}, {"x": 318, "y":  400}],
+      "labelPosition": {"x": 270, "y": 420 }
+    },
+    {
+      "stateFrom": "q7",
+      "stateTo": "q8",
+      "input": "2",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 378, "y": 400}, {"x": 468, "y":  400}],
+      "labelPosition": {"x": 420, "y": 380 }
+    },
+    {
+      "stateFrom": "q7",
+      "stateTo": "q3",
+      "input": "0",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 338, "y": 374}, {"x": 228, "y":  264}],
+      "labelPosition": {"x": 291, "y": 304 }
+    },
+    {
+      "stateFrom": "q3",
+      "stateTo": "q7",
+      "input": "0",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 212, "y": 276}, {"x": 322, "y":  386}],
+      "labelPosition": {"x": 249, "y": 346 }
+    },
+    {
+      "stateFrom": "q1",
+      "stateTo": "q5",
+      "input": "0",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 362, "y": 126}, {"x": 472, "y":  236}],
+      "labelPosition": {"x": 399, "y": 196 }
+    },
+    {
+      "stateFrom": "q5",
+      "stateTo": "q1",
+      "input": "0",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 488, "y": 224}, {"x": 378, "y":  114}],
+      "labelPosition": {"x": 441, "y": 154 }
+    }
+  ],
+  "word": ["1", "0", "0", "0", "1", "1", "0", "0", "1", "0", "2"],
+  "hideQueue": true
+}

@@ -158,7 +158,7 @@ export class GameUI {
 
             context.fillText(this.displayTransition(transition), labelPosition.x, labelPosition.y);
 
-            hitContext.lineWidth = 15;
+            hitContext.lineWidth = 25;
             hitContext.strokeStyle = toHexCode(transitionIndex);
             hitContext.beginPath();
             for (let {x, y} of path) {
