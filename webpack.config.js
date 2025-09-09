@@ -24,6 +24,13 @@ module.exports = {
     plugins: [
         {
             apply: (compiler) => {
+                compiler.hooks.beforeCompile.tap("Create dist directory", () => {
+                    let distDir = path.resolve(__dirname, "dist");
+                    if (!fs.existsSync(distDir)) {
+                        fs.mkdirSync(distDir);
+                    }
+                })
+
                 compiler.hooks.compile.tap("LevelsCompile", () => {
                     let dataDir = path.resolve(__dirname, "data");
                     let levelsDir = path.resolve(__dirname, "data", "levels");
