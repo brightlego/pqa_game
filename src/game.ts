@@ -98,8 +98,10 @@ export class Game {
         let prev = this.levelData.getPrevious(value);
         let next = this.levelData.getNext(value);
         let name = this.levelData.getName(value);
+        let description = this.levelData.getLevelDescription(value);
         this.ui.setPrevNext(prev, next);
         this.ui.setLevelName(name);
+        this.ui.setLevelDescription(description);
         this.loadPQA(data);
     }
 }

@@ -6,11 +6,12 @@ type metadataFormat = {
     group: string,
     groupIndex: number,
     id: string,
+    description?: string,
 }
 
 export class LevelData {
     groups: Map<string, string[]>
-    levels: Map<string, { data: PQAData, group: string, name: string, prev: string | null, next: string | null}>
+    levels: Map<string, { data: PQAData, group: string, name: string, prev: string | null, next: string | null, description: string }>
     ui: GameUI
 
     constructor(ui: GameUI) {
@@ -32,12 +33,13 @@ export class LevelData {
             let name = parsedData.metadata.name.toString();
             let group = parsedData.metadata.group.toString();
             let id = parsedData.metadata.id.toString();
+            let description = parsedData.metadata.description ?? "";
             if (!this.groups.has(group)) {
                 this.groups.set(group, []);
             }
             let index: number = parsedData.metadata.groupIndex;
             this.groups.get(group)![index] = id;
-            this.levels.set(id, { data: pqaData, group, name, prev: null, next: null});
+            this.levels.set(id, { data: pqaData, group, name, prev: null, next: null, description });
 
         }
 
@@ -91,5 +93,9 @@ export class LevelData {
 
     public getName(id: string): string {
         return this.levels.get(id)!.name;
+    }
+
+    public getLevelDescription(id: string): string {
+        return this.levels.get(id)!.description;
     }
 }

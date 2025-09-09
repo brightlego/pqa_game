@@ -22,6 +22,7 @@ export class GameUI {
     stateDiagram: StateDiagram;
     levelGroupList: HTMLOListElement;
     levelGroups: Map<string, HTMLOListElement>;
+    levelDescription: HTMLParagraphElement;
 
 
     public constructor(game: Game) {
@@ -33,6 +34,7 @@ export class GameUI {
         this.nextButton = document.getElementById("next") as HTMLButtonElement;
         this.levelTitle = document.getElementById("level_name") as HTMLHeadingElement;
         this.levelGroupList = document.getElementById("levels") as HTMLOListElement;
+        this.levelDescription = document.getElementById("level_description") as HTMLParagraphElement;
         this.levelGroups = new Map();
         this.queueTableFields = new Map();
         this.game = game;
@@ -266,6 +268,10 @@ export class GameUI {
 
     public setLevelName(name: string) {
         this.levelTitle.innerText = name;
+    }
+
+    public setLevelDescription(description: string) {
+        this.levelDescription.innerHTML = description;
     }
 
 }

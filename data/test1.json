@@ -3,7 +3,8 @@
     "name": "Test 1",
     "group": "Test",
     "groupIndex": 0,
-    "id": "test1"
+    "id": "test1",
+    "description": "This is a test description. <br> We can have <em>em</em> text."
   },
   "states": [
     {
