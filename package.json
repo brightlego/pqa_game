@@ -4,16 +4,21 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
-  "devDependencies": {
-    "@types/jest": "^30.0.0",
-    "jest": "^30.0.3",
-    "ts-jest": "^29.4.0",
+  "dependencies": {
+    "gh-pages": "^6.3.0",
     "ts-loader": "^9.5.2",
     "typescript": "^5.5.3",
     "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.0.3",
+    "ts-jest": "^29.4.0"
   },
   "private": true
 }
