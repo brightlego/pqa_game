@@ -23,12 +23,10 @@ export class LevelData {
 
 
     async loadLevels() {
-        let {groups, levelFiles} = await window.fetch("data/levels.json").then(r => r.text()).then(r => JSON.parse(r));
+        let {groups, levels} = await window.fetch("/dist/levels.json").then(r => r.text()).then(r => JSON.parse(r));
 
-        for (let file of levelFiles) {
-            let rawData: string = await window.fetch(`data/${file}`)
-                .then(r => r.text());
-            let parsedData = JSON.parse(rawData) as dataFormat & {"metadata": metadataFormat};
+        for (let level of levels) {
+            let parsedData = level as dataFormat & {"metadata": metadataFormat};
             let pqaData = new PQAData(parsedData);
             let name = parsedData.metadata.name.toString();
             let group = parsedData.metadata.group.toString();
