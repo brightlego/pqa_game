@@ -1,4 +1,5 @@
 import {Game} from "./game";
+import "./assets/style.css"
 
 function main() {
     let game = new Game();

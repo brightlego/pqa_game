@@ -1,6 +1,9 @@
 import {PQAData, dataFormat} from "./PQAData";
 import {GameUI} from "./gameUI";
 
+// @ts-ignore
+import levelResource from "./assets/levels.json";
+
 type metadataFormat = {
     name: string,
     group: string,
@@ -17,13 +20,13 @@ export class LevelData {
     constructor(ui: GameUI) {
         this.groups = new Map();
         this.levels = new Map();
-        this.ui = ui
+        this.ui = ui;
         this.loadLevels();
     }
 
 
     async loadLevels() {
-        let {groups, levels} = await window.fetch("/dist/levels.json").then(r => r.text()).then(r => JSON.parse(r));
+        let {groups, levels} = await window.fetch(levelResource).then(r => r.text()).then(r => JSON.parse(r));
 
         for (let level of levels) {
             let parsedData = level as dataFormat & {"metadata": metadataFormat};

@@ -3,6 +3,13 @@ import {PQAData} from "./PQAData";
 import {Game} from "./game";
 import {StateDiagram} from "./StateDiagram";
 
+// @ts-ignore
+import buttonClickSoundResource from "./assets/sounds/219069__annabloom__click1.wav";
+
+// @ts-ignore
+import resetSoundResource from "./assets/sounds/54405__korgms2000b__button-click.wav";
+// @ts-ignore
+import acceptSoundResource from "./assets/sounds/66136__aji__ding30603-spedup.wav";
 
 export class GameUI {
     stateCanvas: HTMLCanvasElement;
@@ -12,9 +19,9 @@ export class GameUI {
     wordParagraph: HTMLParagraphElement;
     data: PQAData | null = null;
     queueHidden: boolean = false;
-    buttonClickSound: HTMLAudioElement = new Audio("sounds/219069__annabloom__click1.wav");
-    resetSound: HTMLAudioElement = new Audio("sounds/54405__korgms2000b__button-click.wav");
-    acceptSound: HTMLAudioElement = new Audio("sounds/66136__aji__ding30603-spedup.wav");
+    buttonClickSound: HTMLAudioElement = new Audio(buttonClickSoundResource);
+    resetSound: HTMLAudioElement = new Audio(resetSoundResource);
+    acceptSound: HTMLAudioElement = new Audio(acceptSoundResource);
     levelTitle: HTMLHeadingElement;
     game: Game;
     previousButton: HTMLButtonElement;
