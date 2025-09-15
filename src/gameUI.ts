@@ -30,6 +30,7 @@ export class GameUI {
     levelGroupList: HTMLOListElement;
     levelGroups: Map<string, HTMLOListElement>;
     levelDescription: HTMLParagraphElement;
+    welcomeBeginButton: HTMLButtonElement;
 
 
     public constructor(game: Game) {
@@ -42,11 +43,13 @@ export class GameUI {
         this.levelTitle = document.getElementById("level_name") as HTMLHeadingElement;
         this.levelGroupList = document.getElementById("levels") as HTMLOListElement;
         this.levelDescription = document.getElementById("level_description") as HTMLParagraphElement;
+        this.welcomeBeginButton = document.getElementById("welcome_begin_button") as HTMLButtonElement;
         this.levelGroups = new Map();
         this.queueTableFields = new Map();
         this.game = game;
         this.stateDiagram = new StateDiagram();
         this.stateDiagram.clearCanvas();
+        (document.getElementById("game_start") as HTMLDialogElement | null)?.showModal()
     }
 
     public setPQA(pqa: PQARun<string, string, string>) {
@@ -143,7 +146,7 @@ export class GameUI {
 
 
     public showError(message: String) {
-        console.log(message);
+        console.error(message);
     }
 
     public setActiveState(state: string) {
@@ -279,6 +282,10 @@ export class GameUI {
 
     public setLevelDescription(description: string) {
         this.levelDescription.innerHTML = description;
+    }
+
+    public setFirstLevel(id: string) {
+        this.welcomeBeginButton.onclick = () => { Game.instance?.onLevelSelect(id) }
     }
 
 }

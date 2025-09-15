@@ -15,6 +15,7 @@ type metadataFormat = {
 export class LevelData {
     groups: Map<string, string[]>
     levels: Map<string, { data: PQAData, group: string, name: string, prev: string | null, next: string | null, description: string }>
+    firstLevel: string | null = null;
     ui: GameUI
 
     constructor(ui: GameUI) {
@@ -26,10 +27,10 @@ export class LevelData {
 
 
     async loadLevels() {
-        let {groups, levels} = await window.fetch(levelResource).then(r => r.text()).then(r => JSON.parse(r));
+        let {groups, levels} = await window.fetch(levelResource).then(r => r.text()).then(r => JSON.parse(r) as {groups: string[], levels: (dataFormat & {"metadata": metadataFormat})[]});
 
         for (let level of levels) {
-            let parsedData = level as dataFormat & {"metadata": metadataFormat};
+            let parsedData = level;
             let pqaData = new PQAData(parsedData);
             let name = parsedData.metadata.name.toString();
             let group = parsedData.metadata.group.toString();
@@ -47,6 +48,14 @@ export class LevelData {
         for ( let [groupName, ids] of this.groups) {
             let compressedIds = ids.filter(id => id !== undefined);
             this.groups.set(groupName, compressedIds);
+        }
+
+        if (groups.length > 0) {
+            this.firstLevel = this.groups.get(groups[0])?.[0] ?? null;
+        }
+
+        if (this.firstLevel !== null) {
+            this.ui.setFirstLevel(this.firstLevel)
         }
 
         let prevId: string | null = null;

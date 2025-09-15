@@ -4,6 +4,10 @@ body {
     margin: 0;
 }
 
+button {
+    border-radius: 0;
+}
+
 .automaton {
     display: flex;
     flex-direction: row;
@@ -52,11 +56,11 @@ table#queue td {
 
 #word {
     font-size: 2em;
-    border-radius: 10px;
     padding: 10px;
     height: 40px;
     vertical-align: middle;
     background-color: whitesmoke;
+    border: 2px solid grey;
 }
 
 
@@ -73,7 +77,6 @@ table#queue td {
 .popup {
     background: white;
     border: 2px solid black;
-    border-radius: 10px;
     padding: 5px 20px 20px;
     margin: auto;
     width: fit-content;
@@ -92,7 +95,6 @@ table#queue td {
     color: black;
     font-size: 1.3em;
     padding: 10px;
-    border-radius: 10px;
 }
 
 .popup button {
@@ -157,6 +159,26 @@ table#queue td {
 
 .description p {
     font-size: 1.1em;
+}
+
+
+
+.description code {
+    font-size: 1.1em;
+    background-color: #E0E0E0;
+    padding: 2px;
+}
+
+.description pre > code {
+    padding: 0;
+    background-color: transparent;
+}
+
+.description pre {
+    padding: 10px;
+    background-color: #E5E5E5;
+    width: 90%;
+    border: 2px solid grey;
 }
 
 nav {

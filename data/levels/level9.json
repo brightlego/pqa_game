@@ -3,7 +3,8 @@
     "name": "Level 9",
     "group": "NFA",
     "groupIndex": 8,
-    "id": "level9"
+    "id": "level9",
+    "descriptionPath": "level9.md"
   },
 
   "states": [

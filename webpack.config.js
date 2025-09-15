@@ -40,7 +40,7 @@ module.exports = {
     plugins: [
         {
             apply: (compiler) => {
-                compiler.hooks.compile.tap("LevelsCompile", () => levelBuild.buildLevels(__dirname));
+                compiler.hooks.compile.tap("LevelsCompile", () => levelBuild.buildLevels(__dirname, compiler));
             }
         },
         new HtmlWebpackPlugin({

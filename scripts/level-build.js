@@ -5,7 +5,7 @@ import showdown from "showdown";
 const converter = new showdown.Converter({"strikethrough": true, "tables": true});
 
 
-export function buildLevels(dirname) {
+export function buildLevels(dirname, compiler) {
     let dataDir = path.resolve(dirname, "data");
     let levelsDir = path.resolve(dirname, "data", "levels");
     let distDir = path.resolve(dirname, "src", "assets");
@@ -19,7 +19,11 @@ export function buildLevels(dirname) {
     let resultingObj = {levels: []};
     for (let level of levels) {
         let levelData = fs.readFileSync(path.resolve(levelsDir, level), "utf-8");
-        resultingObj.levels.push(parseLevel(levelData, dirname));
+        let parsedLevel = parseLevel(levelData, dirname);
+        if (parsedLevel.metadata.group === "Test" && compiler.options.mode !== "development") {
+            continue;
+        }
+        resultingObj.levels.push(parsedLevel);
     }
 
     let groups = fs.readFileSync(path.resolve(dataDir, "groups.json"), "utf-8");
