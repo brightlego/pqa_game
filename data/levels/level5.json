@@ -3,42 +3,28 @@
     "name": "Level 5",
     "group": "NFA",
     "groupIndex": 4,
-    "id": "level5"
+    "id": "level5",
+    "descriptionPath": "level5.md"
   },
 
   "states": [
     {
       "name": "q0",
-      "position": { "x": 150, "y": 250},
+      "position": { "x": 200, "y": 250},
       "isAccepting": false
     },
     {
       "name": "q1",
-      "position": { "x":  250, "y":  150},
+      "position": { "x":  350, "y":  250},
       "isAccepting": false
     },
     {
       "name": "q2",
-      "position": { "x":  450, "y":  150},
-      "isAccepting": false
-    },
-    {
-      "name": "q3",
-      "position": { "x":  250, "y":  350},
-      "isAccepting": false
-    },
-    {
-      "name": "q4",
-      "position": { "x":  450, "y":  350},
-      "isAccepting": false
-    },
-    {
-      "name": "q5",
-      "position": { "x":  550, "y":  250},
+      "position": { "x":  500, "y":  250},
       "isAccepting": true
     }
   ],
-  "inputAlphabet": ["a"],
+  "inputAlphabet": ["a", "b"],
   "queueAlphabet": [],
   "priorities": [],
   "initialState": "q0",
@@ -46,58 +32,31 @@
     {
       "stateFrom": "q0",
       "stateTo": "q1",
-      "input": null,
+      "input": "a",
       "queueIn": null,
       "queueOut": null,
-      "path": [ {"x": 170, "y": 230}, {"x": 227, "y":  173}],
-      "labelPosition": {"x": 185, "y": 185 }
+      "path": [ {"x": 220, "y": 240}, {"x": 318, "y":  240}],
+      "labelPosition": {"x": 270, "y": 225 }
+    },
+    {
+      "stateFrom": "q1",
+      "stateTo": "q0",
+      "input": "b",
+      "queueIn": null,
+      "queueOut": null,
+      "path": [ {"x": 330, "y":  260}, {"x": 228, "y": 260}],
+      "labelPosition": {"x": 270, "y": 275 }
     },
     {
       "stateFrom": "q1",
       "stateTo": "q2",
-      "input": "a",
+      "input": null,
       "queueIn": null,
       "queueOut": null,
-      "path": [ {"x": 278, "y":  150}, {"x": 418, "y": 150}],
-      "labelPosition": {"x": 345, "y": 135 }
-    },
-    {
-      "stateFrom": "q2",
-      "stateTo": "q5",
-      "input": "a",
-      "queueIn": null,
-      "queueOut": null,
-      "path": [ {"x": 470, "y": 170}, {"x": 527, "y":  227}],
-      "labelPosition": {"x": 515, "y": 185 }
-    },
-    {
-      "stateFrom": "q0",
-      "stateTo": "q3",
-      "input": "a",
-      "queueIn": null,
-      "queueOut": null,
-      "path": [ {"x": 170, "y": 270}, {"x": 227, "y": 327}],
-      "labelPosition": {"x": 215, "y": 285 }
-    },
-    {
-      "stateFrom": "q3",
-      "stateTo": "q4",
-      "input": "a",
-      "queueIn": null,
-      "queueOut": null,
-      "path": [ {"x": 278, "y":  350}, {"x": 418, "y": 350}],
-      "labelPosition": {"x": 345, "y": 335 }
-    },
-    {
-      "stateFrom": "q4",
-      "stateTo": "q5",
-      "input": "a",
-      "queueIn": null,
-      "queueOut": null,
-      "path": [ {"x": 470, "y": 330}, {"x": 527, "y":  273}],
-      "labelPosition": {"x": 485, "y": 285 }
+      "path": [ {"x": 370, "y": 250}, {"x": 468, "y":  250}],
+      "labelPosition": {"x": 420, "y": 235 }
     }
   ],
-  "word": ["a", "a", "a"],
+  "word": ["a", "b", "a", "b", "a"],
   "hideQueue": true
 }
