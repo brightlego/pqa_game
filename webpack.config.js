@@ -1,7 +1,7 @@
 const path = require('path');
-const fs = require('fs');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const levelBuild = require("./scripts/level-build")
 
 module.exports = {
     entry: './src/index.ts',
@@ -40,29 +40,7 @@ module.exports = {
     plugins: [
         {
             apply: (compiler) => {
-                compiler.hooks.compile.tap("LevelsCompile", () => {
-                    let dataDir = path.resolve(__dirname, "data");
-                    let levelsDir = path.resolve(__dirname, "data", "levels");
-                    let distDir = path.resolve(__dirname, "src", "assets");
-
-                    if (!fs.existsSync(distDir)) {
-                        fs.mkdirSync(distDir);
-                    }
-
-                    let levels =  fs.readdirSync(levelsDir)
-
-                    let resultingObj = {levels: []};
-                    for (let level of levels) {
-                        let levelData = fs.readFileSync(path.resolve(levelsDir, level), "utf-8");
-                        resultingObj.levels.push(JSON.parse(levelData));
-                    }
-
-                    let groups = fs.readFileSync(path.resolve(dataDir, "groups.json"), "utf-8");
-                    resultingObj.groups = JSON.parse(groups);
-
-                    fs.writeFileSync(path.resolve(distDir, "levels.json"), JSON.stringify(resultingObj));
-                    console.log(`${levels.length} levels written to ${distDir}/levels.json`)
-                });
+                compiler.hooks.compile.tap("LevelsCompile", () => levelBuild.buildLevels(__dirname));
             }
         },
         new HtmlWebpackPlugin({

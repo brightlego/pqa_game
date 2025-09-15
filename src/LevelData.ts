@@ -21,7 +21,7 @@ export class LevelData {
         this.groups = new Map();
         this.levels = new Map();
         this.ui = ui;
-        this.loadLevels();
+        this.loadLevels().then(() => {});
     }
 
 

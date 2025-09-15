@@ -4,7 +4,7 @@
     "group": "Test",
     "groupIndex": 0,
     "id": "test1",
-    "description": "This is a test description. <br> We can have <em>em</em> text."
+    "descriptionPath": "test.md"
   },
   "states": [
     {

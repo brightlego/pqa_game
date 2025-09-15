@@ -3,7 +3,8 @@
     "name": "Level 2",
     "group": "NFA",
     "groupIndex": 1,
-    "id": "level2"
+    "id": "level2",
+    "descriptionPath": "level2.md"
   },
 
   "states": [
