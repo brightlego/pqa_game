@@ -8,16 +8,20 @@ export class Game {
     ui: GameUI;
     levelData: LevelData;
     static instance: Game | null = null;
+    hasAccepted: boolean;
+    nextLevel: string | null = null;
 
     constructor() {
         this.ui = new GameUI(this);
         this.levelData = new LevelData(this.ui);
         this.pqa = null;
         Game.instance = this;
+        this.hasAccepted = false;
     }
 
     public loadPQA(pqaData: PQAData) {
         this.pqa = pqaData.createPQA();
+        this.hasAccepted = false;
         this.ui.setPQA(this.pqa);
     }
 
@@ -35,8 +39,14 @@ export class Game {
         }
         this.onStateHover(e);
 
-        if (this.pqa?.canAccept()) {
+        if (this.pqa?.canAccept() && !this.hasAccepted) {
             this.ui.onAccept();
+
+            if (this.nextLevel !== null) {
+                this.levelData.unlockLevel(this.nextLevel)
+            }
+
+            this.hasAccepted = true;
         }
     }
 
@@ -100,9 +110,15 @@ export class Game {
         let name = this.levelData.getName(value);
         let description = this.levelData.getLevelDescription(value);
         this.ui.setPrevNext(prev, next);
+        this.nextLevel = next;
         this.ui.setLevelName(name);
         this.ui.setLevelDescription(description);
         this.loadPQA(data);
+    }
+
+    public resetProgress() {
+        localStorage.removeItem("unlockedLevels");
+        window.location.reload();
     }
 }
 

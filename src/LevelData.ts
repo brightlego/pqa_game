@@ -12,17 +12,29 @@ type metadataFormat = {
     description?: string,
 }
 
+type Level = {
+    data: PQAData,
+    group: string,
+    name: string,
+    prev: string | null,
+    next: string | null,
+    description: string
+};
+
 export class LevelData {
-    groups: Map<string, string[]>
-    levels: Map<string, { data: PQAData, group: string, name: string, prev: string | null, next: string | null, description: string }>
+    groups: Map<string, string[]> = new Map();
+    levels: Map<string, Level> = new Map();
     firstLevel: string | null = null;
     ui: GameUI
+    unlockedLevels: Set<string>;
 
     constructor(ui: GameUI) {
-        this.groups = new Map();
-        this.levels = new Map();
         this.ui = ui;
-        this.loadLevels().then(() => {});
+        this.unlockedLevels = new Set(JSON.parse(localStorage.getItem("unlockedLevels") ?? "[]") as string[]);
+        this.loadLevels().then(() => {
+            if (this.firstLevel !== null) { this.unlockLevel(this.firstLevel); }
+            this.ui.setUnlockedLevels(this.unlockedLevels)
+        });
     }
 
 
@@ -107,5 +119,16 @@ export class LevelData {
 
     public getLevelDescription(id: string): string {
         return this.levels.get(id)!.description;
+    }
+
+    public unlockLevel(id: string) {
+        this.unlockedLevels.add(id);
+        let unlockedLevels = Array.from(this.unlockedLevels);
+        localStorage.setItem("unlockedLevels", JSON.stringify(unlockedLevels));
+        this.ui.setUnlockedLevels(this.unlockedLevels);
+    }
+
+    public isLevelUnlocked(id: string): boolean {
+        return this.unlockedLevels.has(id);
     }
 }

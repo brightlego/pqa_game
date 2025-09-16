@@ -29,6 +29,7 @@ export class GameUI {
     stateDiagram: StateDiagram;
     levelGroupList: HTMLOListElement;
     levelGroups: Map<string, HTMLOListElement>;
+    levels: Map<string, HTMLButtonElement>;
     levelDescription: HTMLParagraphElement;
     welcomeBeginButton: HTMLButtonElement;
 
@@ -46,6 +47,7 @@ export class GameUI {
         this.welcomeBeginButton = document.getElementById("welcome_begin_button") as HTMLButtonElement;
         this.levelGroups = new Map();
         this.queueTableFields = new Map();
+        this.levels = new Map();
         this.game = game;
         this.stateDiagram = new StateDiagram();
         this.stateDiagram.clearCanvas();
@@ -230,11 +232,11 @@ export class GameUI {
     }
 
     public onReset() {
-        this.resetSound.play();
+        this.resetSound.play().then(() => {});
     }
 
     public onAccept() {
-        this.acceptSound.play();
+        this.acceptSound.play().then(() => {});
         (document.getElementById("accepted")! as HTMLDialogElement).showModal();
     }
 
@@ -255,6 +257,7 @@ export class GameUI {
         button.innerText = levelName;
         button.onclick = () => { Game.instance?.onLevelSelect(id) }
         listElem.appendChild(button);
+        this.levels.set(id, button);
         groupElement.appendChild(listElem);
     }
 
@@ -263,7 +266,7 @@ export class GameUI {
             this.previousButton.disabled = true;
             this.previousButton.value = "";
         } else {
-            this.previousButton.disabled = false;
+            this.previousButton.disabled = !this.game.levelData.isLevelUnlocked(prev);
             this.previousButton.value = prev;
         }
 
@@ -271,7 +274,7 @@ export class GameUI {
             this.nextButton.disabled = true;
             this.nextButton.value = "";
         } else {
-            this.nextButton.disabled = false;
+            this.nextButton.disabled = !this.game.levelData.isLevelUnlocked(next);
             this.nextButton.value = next;
         }
     }
@@ -286,6 +289,27 @@ export class GameUI {
 
     public setFirstLevel(id: string) {
         this.welcomeBeginButton.onclick = () => { Game.instance?.onLevelSelect(id) }
+        this.game.onLevelSelect(id);
     }
 
+    public setUnlockedLevels(unlockedLevels: Iterable<string>) {
+        for (let button of this.levels.values()) {
+            button.disabled = true;
+        }
+
+        this.previousButton.disabled = true;
+        this.nextButton.disabled = true;
+
+        for (let level of unlockedLevels) {
+            if (this.previousButton.value === level) {
+                this.previousButton.disabled = false;
+            }
+            if (this.nextButton.value === level) {
+                this.nextButton.disabled = false;
+            }
+            if (this.levels.has(level)) {
+                this.levels.get(level)!.disabled = false;
+            }
+        }
+    }
 }
