@@ -2,6 +2,12 @@ import {PQARun, Transition} from "./PQA";
 
 type position = { x : number, y : number }
 
+type pathPoint = (position & { state: undefined, offset: undefined }) | { state: string, offset?: number }
+
+type labelPosition = position & { angle: undefined } | { angle: "N" | "NW" | "W" | "SW" | "S" | "SE" | "E" | "NE" | number }
+
+const STATE_RADIUS: number = 30;
+
 export type dataFormat = {
     states: { name: string, position: position, isAccepting: boolean }[],
     inputAlphabet: string[],
@@ -13,8 +19,8 @@ export type dataFormat = {
         input: string | null,
         queueIn: { symbol: string, priority: number } | null,
         queueOut: { symbol: string, priority: number } | null,
-        path: position[],
-        labelPosition: position
+        path: pathPoint[],
+        labelPosition: labelPosition
     }[]
     priorities: number[],
     initialState: string,
@@ -95,12 +101,9 @@ export class PQAData {
                 throw new Error(`Queue Symbol ${queueOut.symbol} is not valid`)
             }
 
-            let path = [];
-            for (let {x, y} of transition.path) {
-                path.push({x, y});
-            }
+            let path = this.createPath(transition.path);
 
-            let labelPosition = {x: transition.labelPosition.x, y: transition.labelPosition.y};
+            let labelPosition = this.createLabelPosition(transition.labelPosition, path);
 
             this.transitions.push({transition: {stateFrom, stateTo, input, queueIn, queueOut}, path, labelPosition});
         }
@@ -115,6 +118,86 @@ export class PQAData {
         }
 
         this.queueHidden = value.hideQueue ?? false;
+    }
+
+    createLabelPosition(position: labelPosition, path: position[]): position {
+        if (position.angle === undefined) {
+            return position;
+        }
+
+        let midpoint = {x: (path[0].x + path[path.length - 1].x)/2, y: (path[0].y + path[path.length - 1].y)/2};
+        let angle: number;
+        if (typeof position.angle === "number") {
+            angle = position.angle;
+        } else {
+            switch (position.angle) {
+                case "N": angle = 90; break;
+                case "NE": angle = 45; break;
+                case "E": angle = 0; break;
+                case "SE": angle = -45; break;
+                case "S": angle = -90; break;
+                case "SW": angle = -135; break;
+                case "W": angle = 180; break;
+                case "NW": angle = 135; break;
+                default: throw new Error(`Invalid angle ${position.angle}`);
+            }
+        }
+        angle = -angle / 360 * 2 * Math.PI;
+        let x = midpoint.x + 20 * Math.cos(angle) - 5;
+        let y = midpoint.y + 20 * Math.sin(angle);
+        return {x, y}
+    }
+
+    createPath(path: pathPoint[]): position[] {
+        let result: position[] = [];
+        for (let point of path) {
+            if (point.state !== undefined) {
+                if (!this.states.has(point.state)) {
+                    throw new Error(`State ${point} not found in states`);
+                }
+                result.push(this.states.get(point.state)?.position ?? {x: 0, y: 0})
+            } else {
+                result.push(point);
+            }
+        }
+
+        if (path.length > 1) {
+            let head = path[0];
+            let newHead;
+            if (head.state !== undefined) {
+                let offset = head.offset ?? 0;
+                let start = result[0];
+                let end = result[1];
+                let dist = Math.sqrt((start.x - end.x)*(start.x - end.x) + (start.y - end.y)*(start.y - end.y));
+
+                let t = (Math.sqrt(STATE_RADIUS*STATE_RADIUS - offset*offset) - 2)/dist;
+                let x = start.x + (start.y - end.y)*offset/dist + t*(end.x - start.x);
+                let y = start.y + (end.x - start.x)*offset/dist + t*(end.y - start.y);
+                newHead = {x, y};
+            } else {
+                newHead = result[0];
+            }
+
+            let tail = path[path.length - 1];
+            let newTail;
+            if (tail.state !== undefined) {
+                let offset = tail.offset ?? 0;
+                let start = result[path.length - 2];
+                let end = result[path.length - 1];
+                let dist = Math.sqrt((start.x - end.x)*(start.x - end.x) + (start.y - end.y)*(start.y - end.y));
+
+                let t = 1 - (Math.sqrt(STATE_RADIUS*STATE_RADIUS - offset*offset) + 2)/dist;
+                let x = start.x + (start.y - end.y)*offset/dist + t*(end.x - start.x);
+                let y = start.y + (end.x - start.x)*offset/dist + t*(end.y - start.y);
+                newTail = {x, y};
+            } else {
+                newTail = result[path.length - 1];
+            }
+
+            result[0] = newHead;
+            result[path.length - 1] = newTail;
+        }
+        return result;
     }
 
     public createPQA(): PQARun<string, string, string> {

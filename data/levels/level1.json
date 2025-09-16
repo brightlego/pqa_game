@@ -30,8 +30,8 @@
       "input": null,
       "queueIn": null,
       "queueOut": null,
-      "path": [ {"x": 230, "y": 250}, {"x": 468, "y":  250}],
-      "labelPosition": {"x": 340, "y": 235 }
+      "path": [ {"state": "q0"}, {"state": "q1"}],
+      "labelPosition": { "angle": "N" }
     }
   ],
   "word": [],
