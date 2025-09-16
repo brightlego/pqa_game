@@ -190,6 +190,17 @@ nav {
 
 nav ol {
     list-style-type: none;
+    border: 2px solid grey;
+    padding: 0;
+}
+
+nav ol#levels {
+    padding-left: 40px;
+    border: none;
+}
+
+nav button:disabled {
+    color: transparent;
 }
 
 nav button {
@@ -198,9 +209,52 @@ nav button {
     border-radius: 0;
     width: 100%;
     border: 0;
+    background-color: white;
 }
 
+nav button:hover {
+    background-color: lightgrey;
+}
+
+nav button:hover:disabled {
+    background-color: transparent;
+}
+
+nav button.current {
+    background-color: lightblue;
+}
+
+nav button.current:hover {
+    background-color: lightslategrey;
+}
+
+nav button.current:active {
+    background-color: lightslategrey;
+}
+
+
+
 footer {
-    width: 100%;
-    vertical-align: bottom;
+    width: 50%;
+    margin: 1vh auto;
+    padding: 20px;
+    background-color: white;
+    border: 2px solid black;
+    vertical-align: middle;
+}
+
+footer button {
+    font-size: 1.1em;
+    padding: 10px 20px;
+    vertical-align: middle;
+}
+
+footer .reset {
+    background-color: darkred;
+    color: white;
+}
+
+footer img {
+    height: 35px;
+    vertical-align: middle;
 }

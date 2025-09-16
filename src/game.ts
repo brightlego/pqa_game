@@ -113,6 +113,7 @@ export class Game {
         this.nextLevel = next;
         this.ui.setLevelName(name);
         this.ui.setLevelDescription(description);
+        this.ui.setCurrentLevel(value);
         this.loadPQA(data);
     }
 

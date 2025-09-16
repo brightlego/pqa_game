@@ -312,4 +312,13 @@ export class GameUI {
             }
         }
     }
+    public setCurrentLevel(id: string) {
+        for (let button of this.levels.values()) {
+            button.classList.remove("current");
+        }
+
+        if (this.levels.has(id)) {
+            this.levels.get(id)!.classList.add("current");
+        }
+    }
 }
