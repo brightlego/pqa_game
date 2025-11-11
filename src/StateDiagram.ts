@@ -127,7 +127,7 @@ export class StateDiagram {
         let transitionIndex = 0;
         context.strokeStyle = "black";
 
-        for (let {transition, path, labelPosition} of data.transitions) {
+        for (let {transition, path, labelPosition, labelAlign} of data.transitions) {
             context.lineWidth = 6 * this.scale;
             context.beginPath();
             for (let {x, y} of path) {
@@ -139,7 +139,7 @@ export class StateDiagram {
 
             context.fillStyle = "black";
             context.font = `${Math.round(16 * this.scale)}px Arial`;
-            context.textAlign = "left";
+            context.textAlign = labelAlign;
             context.textBaseline = "middle";
 
             context.fillText(this.displayTransition(transition), this.xTransform(labelPosition.x), this.yTransform(labelPosition.y));
@@ -184,7 +184,7 @@ export class StateDiagram {
             context.font = `${Math.round(16 * this.scale)}px Arial`;
             context.textAlign = "center";
             context.textBaseline = "middle";
-            context.fillText(state, this.xTransform(position.x), this.yTransform(position.y));
+            // context.fillText(state, this.xTransform(position.x), this.yTransform(position.y));
         }
     }
 }

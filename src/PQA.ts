@@ -48,7 +48,15 @@ class RunState {
     }
 
     updateMaxPriority() {
-        this.maxPriority = Math.max(...this.queue.keys())
+        this.maxPriority = -Infinity;
+        for (let [priority, map] of this.queue) {
+            for (let [_, count] of map) {
+                if (count > 0 && priority > this.maxPriority) {
+                    this.maxPriority = priority;
+                    break;
+                }
+            }
+        }
     }
 
     tryRemoveElement(elem: QueueElement): boolean {
@@ -59,13 +67,14 @@ class RunState {
         if (count === undefined || count === 0) { return false; }
         map.set(elem.symbol, count - 1);
         if (count === 1) {
-            this.updateMaxPriority()
+            this.updateMaxPriority();
         }
         this.mostRecentlyRemovedElement = elem;
         return true;
     }
 
     canRemoveElement(elem: QueueElement): boolean {
+        console.log(elem, this.queue, this.maxPriority)
         if (elem.priority < this.maxPriority) { return false; }
         let map = this.queue.get(elem.priority);
         if (map === undefined) { return false; }

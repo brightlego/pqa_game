@@ -54,7 +54,7 @@ export class GameUI {
         (document.getElementById("game_start") as HTMLDialogElement | null)?.showModal()
     }
 
-    public setPQA(pqa: PQARun<string, string, string>) {
+    public setPQA(pqa: PQARun<string, string, string>, showDialog: boolean = true) {
         if (pqa.originData === null) {
             throw new Error("PQA has no origin data, unable to construct UI");
         }
@@ -64,6 +64,14 @@ export class GameUI {
         this.updatePriorityQueue(pqa.queue());
         this.updateWord(pqa.word);
         this.setActiveState(pqa.state);
+        if (!(document.getElementById("game_start") as HTMLDialogElement | null)?.open && showDialog) {
+            this.showDescription();
+        }
+    }
+
+    public showDescription() {
+        (document.getElementById("description") as HTMLDialogElement | null)?.showModal();
+        (document.getElementById("description") as HTMLDialogElement | null)?.scrollTo(0, 0);
     }
 
     public getTransitionIdx(event: MouseEvent): number {
@@ -166,6 +174,7 @@ export class GameUI {
         inProjectile.classList.add("projectile", "red");
         let targetElem = this.queueTableFields.get([queueInType.symbol, queueInType.priority].toString())!;
         targetElem.innerText = (parseInt(targetElem.innerText) - 1).toString();
+        if (targetElem.innerText === "0") { targetElem.innerText = "" }
         let target = targetElem.getBoundingClientRect();
         document.body.prepend(inProjectile);
         console.log(e.x, e.y, target.x, target.y);
@@ -184,6 +193,7 @@ export class GameUI {
         )
 
         setTimeout(() => {
+            if (targetElem.innerText === "") { targetElem.innerText = "0" }
             targetElem.innerText = (1 + parseInt(targetElem.innerText)).toString();
             inProjectile.style.transform = `translate(${target.x + 0.5*target.width}px, ${target.y + 0.5*target.height}px)`;
         }, 200);

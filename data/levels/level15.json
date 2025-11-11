@@ -1,0 +1,124 @@
+{
+  "metadata": {
+    "name": "Level 15",
+    "group": "PQA",
+    "groupIndex": 4,
+    "id": "level15",
+    "descriptionPath": "level15.md"
+  },
+
+  "states": [
+    {
+      "name": "q0",
+      "position": { "x": 150, "y": 200 },
+      "isAccepting": false
+    },
+    {
+      "name": "q1",
+      "position": { "x":  350, "y":  200 },
+      "isAccepting": false
+    },
+    {
+      "name": "q2",
+      "position": { "x":  550, "y":  200 },
+      "isAccepting": false
+    },
+    {
+      "name": "q3",
+      "position": { "x":  150, "y":  350 },
+      "isAccepting": false
+    },
+    {
+      "name": "q4",
+      "position": { "x":  350, "y":  350 },
+      "isAccepting": true
+    }
+  ],
+  "inputAlphabet": [],
+  "queueAlphabet": ["x", "y"],
+  "priorities": [2, 1],
+  "initialState": "q0",
+  "transitions": [
+    {
+      "stateFrom": "q0",
+      "stateTo": "q1",
+      "input": null,
+      "queueIn": { "symbol": "x", "priority":  1 },
+      "queueOut": null,
+      "path": { "offset": -10 },
+      "labelPosition": { "angle": "N" },
+      "labelAlign": "center"
+    },
+    {
+      "stateFrom": "q1",
+      "stateTo": "q0",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": { "offset": -10 },
+      "labelPosition": { "angle": "S" },
+      "labelAlign": "center"
+    },
+    {
+      "stateFrom": "q1",
+      "stateTo": "q2",
+      "input": null,
+      "queueIn": { "symbol": "y", "priority":  2 },
+      "queueOut": null,
+      "path": {"offset":  -10},
+      "labelPosition": { "angle": "N" },
+      "labelAlign": "center"
+    },
+    {
+      "stateFrom": "q2",
+      "stateTo": "q1",
+      "input": null,
+      "queueIn": { "symbol": "y", "priority":  1 },
+      "queueOut": null,
+      "path": {"offset":  -10},
+      "labelPosition": { "angle": "S" },
+      "labelAlign": "center"
+    },
+    {
+      "stateFrom": "q0",
+      "stateTo": "q3",
+      "input": null,
+      "queueIn": null,
+      "queueOut": { "symbol": "y", "priority":  1 },
+      "path": { "offset": -10 },
+      "labelPosition": { "angle": "E" },
+      "labelAlign": "left"
+    },
+    {
+      "stateFrom": "q0",
+      "stateTo": "q3",
+      "input": null,
+      "queueIn": null,
+      "queueOut": { "symbol":  "y", "priority": 2 },
+      "path": { "offset": 10 },
+      "labelPosition": { "angle": "W" },
+      "labelAlign": "right"
+    },
+    {
+      "stateFrom": "q3",
+      "stateTo": "q4",
+      "input": null,
+      "queueIn": null,
+      "queueOut": { "symbol":  "x", "priority": 1 },
+      "path": {"offset":  10},
+      "labelPosition": { "angle": "S" },
+      "labelAlign": "center"
+    },
+    {
+      "stateFrom": "q3",
+      "stateTo": "q4",
+      "input": null,
+      "queueIn": null,
+      "queueOut": { "symbol":  "y", "priority": 1 },
+      "path": {"offset":  -10},
+      "labelPosition": { "angle": "N" },
+      "labelAlign": "center"
+    }
+  ],
+  "word": []
+}

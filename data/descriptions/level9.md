@@ -3,9 +3,8 @@ much more challenging than in the previous levels, so don't worry if you
 can't get it. It took me three pages of working and about 1 hour to find the 
 regular expression.
 
-If you are interested in learning about an algorithm to convert an NFA into 
-a regular expression, look at
-[Kleene's algorithm](https://en.wikipedia.org/wiki/Kleene%27s_algorithm) 
+There are several possible algorithms one can use to convert an NFA into a 
+regular expression. One of them is [Kleene's algorithm](https://en.wikipedia.org/wiki/Kleene%27s_algorithm) 
 (note Wikipedia uses `R1 | R2` instead of `R1 + R2`). 
 
 Additionally, to simplify some regular expressions, `R?` is a shorthand for `

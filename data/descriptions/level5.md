@@ -1,6 +1,6 @@
 In many automata, there are loops which can allow the automata to accept 
 infinitely many words. In this case, you need to go through the 
-`q0`-`q1`-`q0` loop to accept the input. 
+left-centre-left loop to accept the input. 
 
 
 

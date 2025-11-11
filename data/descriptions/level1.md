@@ -10,4 +10,5 @@ introduce PQAs which have a priority queue as well.
 The goal of this game is to make the automaton accept by making an accepting 
 state the current state.
 
-Try clicking on the transition to move the current state from `q0` to `q1`.
+Try clicking on the transition to move the current state from the leftmost 
+state to the rightmost one.

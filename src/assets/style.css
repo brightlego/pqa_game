@@ -55,9 +55,9 @@ table#queue td {
 }
 
 #word {
-    font-size: 2em;
+    font-size: 1.5em;
     padding: 10px;
-    height: 40px;
+    height: 25px;
     vertical-align: middle;
     background-color: whitesmoke;
     border: 2px solid grey;
@@ -72,6 +72,11 @@ table#queue td {
     top: 0;
     left: 0;
     z-index: 100;
+}
+
+.popup#inner_description {
+    top: 10%;
+    width: 70%;
 }
 
 .popup {
@@ -119,14 +124,15 @@ table#queue td {
 }
 
 #game_window button {
-    font-size: 1.5em;
-    padding: 10px 20px;
+    font-size: 1.3em;
+    padding: 5px 10px;
     border-radius: 0;
 }
 
 .prev_next #prev {
     float: left;
 }
+
 
 .prev_next #next {
     float: right;
@@ -144,15 +150,12 @@ table#queue td {
 }
 
 .description {
-    float: right;
-    height: 90vh;
-    width: 20vw;
+
 }
 
 .description section {
     margin: 10px;
     padding: 10px;
-    border: 2px solid black;
     height: 100%;
     overflow-y: scroll;
 }
@@ -195,40 +198,40 @@ nav ol {
 }
 
 nav ol#levels {
-    padding-left: 40px;
+    padding-left: 0;
     border: none;
 }
 
-nav button:disabled {
+nav ol#levels button:disabled {
     color: transparent;
 }
 
-nav button {
+nav ol#levels button {
     font-size: 1.5em;
-    padding: 10px 20px;
+    padding: 10px 10px;
     border-radius: 0;
     width: 100%;
     border: 0;
     background-color: white;
 }
 
-nav button:hover {
+nav ol#levels button:hover {
     background-color: lightgrey;
 }
 
-nav button:hover:disabled {
+nav ol#levels button:hover:disabled {
     background-color: transparent;
 }
 
-nav button.current {
+nav ol#levels button.current {
     background-color: lightblue;
 }
 
-nav button.current:hover {
+nav ol#levels button.current:hover {
     background-color: lightslategrey;
 }
 
-nav button.current:active {
+nav ol#levels button.current:active {
     background-color: lightslategrey;
 }
 
@@ -243,18 +246,19 @@ footer {
     vertical-align: middle;
 }
 
-footer button {
-    font-size: 1.1em;
-    padding: 10px 20px;
+button.reset {
+    font-size: 1.5em;
+    padding: 10px 10px;
     vertical-align: middle;
+    width: fit-content;
 }
 
-footer .reset {
+nav .reset {
     background-color: darkred;
     color: white;
 }
 
-footer img {
+nav img {
     height: 35px;
     vertical-align: middle;
 }

@@ -1,0 +1,94 @@
+{
+  "metadata": {
+    "name": "Level 13",
+    "group": "PQA",
+    "groupIndex": 2,
+    "id": "level13",
+    "descriptionPath": "level13.md"
+  },
+
+  "states": [
+    {
+      "name": "q0",
+      "position": { "x": 100, "y": 200 },
+      "isAccepting": false
+    },
+    {
+      "name": "q1",
+      "position": { "x":  267, "y":  200 },
+      "isAccepting": false
+    },
+    {
+      "name": "q2",
+      "position": { "x":  433, "y":  200 },
+      "isAccepting": false
+    },
+    {
+      "name": "q3",
+      "position": { "x":  600, "y":  200 },
+      "isAccepting": false
+    },
+    {
+      "name": "q4",
+      "position": { "x":  433, "y":  350 },
+      "isAccepting": true
+    },
+    {
+      "name": "q5",
+      "position": { "x":  600, "y":  350 },
+      "isAccepting": true
+    }
+  ],
+  "inputAlphabet": [],
+  "queueAlphabet": ["x"],
+  "priorities": [2, 1],
+  "initialState": "q0",
+  "transitions": [
+    {
+      "stateFrom": "q0",
+      "stateTo": "q1",
+      "input": null,
+      "queueIn": { "symbol": "x", "priority": 2 },
+      "queueOut": null,
+      "labelPosition": { "angle": "N" },
+      "labelAlign": "center"
+    },
+    {
+      "stateFrom": "q1",
+      "stateTo": "q2",
+      "input": null,
+      "queueIn": { "symbol": "x", "priority": 1 },
+      "queueOut": null,
+      "labelPosition": { "angle": "N" },
+      "labelAlign": "center"
+    },
+    {
+      "stateFrom": "q2",
+      "stateTo": "q3",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "labelPosition": { "angle": "N" },
+      "labelAlign": "center"
+    },
+    {
+      "stateFrom": "q3",
+      "stateTo": "q5",
+      "input": null,
+      "queueIn": null,
+      "queueOut": { "symbol": "x", "priority": 2 },
+      "labelPosition": { "angle": "W" },
+      "labelAlign": "right"
+    },
+    {
+      "stateFrom": "q2",
+      "stateTo": "q4",
+      "input": null,
+      "queueIn": null,
+      "queueOut": { "symbol": "x", "priority": 1 },
+      "labelPosition": { "angle": "W" },
+      "labelAlign": "right"
+    }
+  ],
+  "word": []
+}

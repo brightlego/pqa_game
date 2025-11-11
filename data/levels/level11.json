@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "name": "Level 11",
+    "group": "PQA",
+    "groupIndex": 0,
+    "id": "level11",
+    "descriptionPath": "level11.md"
+  },
+
+  "states": [
+    {
+      "name": "q0",
+      "position": { "x": 150, "y": 250},
+      "isAccepting": false
+    },
+    {
+      "name": "q1",
+      "position": { "x":  350, "y":  250},
+      "isAccepting": false
+    },
+    {
+      "name": "q2",
+      "position": { "x":  550, "y":  250},
+      "isAccepting": true
+    }
+  ],
+  "inputAlphabet": [],
+  "queueAlphabet": ["x"],
+  "priorities": [1],
+  "initialState": "q0",
+  "transitions": [
+    {
+      "stateFrom": "q0",
+      "stateTo": "q1",
+      "input": null,
+      "queueIn": { "symbol": "x", "priority": 1},
+      "queueOut": null,
+      "labelPosition": { "angle": "N" },
+      "labelAlign": "center"
+    },
+    {
+      "stateFrom": "q1",
+      "stateTo": "q2",
+      "input": null,
+      "queueIn": null,
+      "queueOut": { "symbol": "x", "priority": 1},
+      "labelPosition": { "angle": "N" },
+      "labelAlign": "center"
+    }
+  ],
+  "word": []
+}

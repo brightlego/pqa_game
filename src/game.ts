@@ -19,10 +19,10 @@ export class Game {
         this.hasAccepted = false;
     }
 
-    public loadPQA(pqaData: PQAData) {
+    public loadPQA(pqaData: PQAData, showDialog: boolean = true) {
         this.pqa = pqaData.createPQA();
         this.hasAccepted = false;
-        this.ui.setPQA(this.pqa);
+        this.ui.setPQA(this.pqa, showDialog);
     }
 
     public onStateHover(e: MouseEvent) {
@@ -83,7 +83,7 @@ export class Game {
     public resetCurrentPQA() {
         let data = this.pqa?.originData;
         if (data !== null && data !== undefined) {
-            this.loadPQA(data);
+            this.loadPQA(data, false);
         }
         this.ui.onReset();
     }

@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "name": "Level 12",
+    "group": "PQA",
+    "groupIndex": 1,
+    "id": "level12",
+    "descriptionPath": "level12.md"
+  },
+
+  "states": [
+    {
+      "name": "q0",
+      "position": { "x": 200, "y": 200},
+      "isAccepting": false
+    },
+    {
+      "name": "q1",
+      "position": { "x":  500, "y":  200},
+      "isAccepting": false
+    },
+    {
+      "name": "q2",
+      "position": { "x":  200, "y":  400},
+      "isAccepting": true
+    }
+  ],
+  "inputAlphabet": [],
+  "queueAlphabet": ["x"],
+  "priorities": [1],
+  "initialState": "q0",
+  "transitions": [
+    {
+      "stateFrom": "q0",
+      "stateTo": "q1",
+      "input": null,
+      "queueIn": { "symbol": "x", "priority": 1 },
+      "queueOut": null,
+      "path": { "offset": 10 },
+      "labelPosition": { "angle": "S" },
+      "labelAlign": "center"
+    },
+    {
+      "stateFrom": "q1",
+      "stateTo": "q0",
+      "input": null,
+      "queueIn": null,
+      "queueOut": null,
+      "path": { "offset": 10 },
+      "labelPosition": { "angle": "N" },
+      "labelAlign": "center"
+    },
+    {
+      "stateFrom": "q0",
+      "stateTo": "q2",
+      "input": null,
+      "queueIn": null,
+      "queueOut": { "symbol": "x", "priority": 1 },
+      "labelPosition": { "angle": "E" },
+      "labelAlign": "left"
+    }
+  ],
+  "word": []
+}

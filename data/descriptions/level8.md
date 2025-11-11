@@ -6,6 +6,6 @@ you can find the two different ways in this level.
     This automaton accepts the language recognised by:
 
 ```text
-(aaab + b)(a + b)*
+(aaab + b)(a + b + cb)*
 ```
 </details>

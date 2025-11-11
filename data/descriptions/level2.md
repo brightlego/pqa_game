@@ -6,7 +6,7 @@ Each transition reads in either nothing or a single symbol from the input.
 The symbol *must* be at the front of the input for the transition to be able 
 to be run. 
 
-In this case, the transition from `q0` to `q1` reads in an `a` from the 
+In this case, the left transition reads in an `a` from the 
 input. Try clicking on that transition. 
 
 As an additional challenge, try thinking about what possible words each 

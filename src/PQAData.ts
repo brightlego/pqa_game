@@ -19,8 +19,9 @@ export type dataFormat = {
         input: string | null,
         queueIn: { symbol: string, priority: number } | null,
         queueOut: { symbol: string, priority: number } | null,
-        path: pathPoint[],
-        labelPosition: labelPosition
+        path?: pathPoint[] & {offset: undefined} | {offset: number},
+        labelPosition: labelPosition,
+        labelAlign?: "left" | "center" | "right",
     }[]
     priorities: number[],
     initialState: string,
@@ -32,7 +33,7 @@ export class PQAData {
     states: Map<string, { position: position, isAccepting: boolean }>;
     inputAlphabet: Set<string>;
     queueAlphabet: Set<string>;
-    transitions: { transition: Transition<string, string, string>, path: position[], labelPosition: position}[];
+    transitions: { transition: Transition<string, string, string>, path: position[], labelPosition: position, labelAlign: "left" | "center" | "right"}[];
     initialState: string;
     priorities: number[];
     word: string[];
@@ -101,11 +102,20 @@ export class PQAData {
                 throw new Error(`Queue Symbol ${queueOut.symbol} is not valid`)
             }
 
-            let path = this.createPath(transition.path);
+            let rawPath: pathPoint[];
+            if (transition.path?.offset !== undefined || transition.path === undefined) {
+                rawPath = [{"state": stateFrom, "offset": transition.path?.offset}, {"state": stateTo, "offset": transition.path?.offset}]
+            } else {
+                rawPath = transition.path;
+            }
+
+            let path = this.createPath(rawPath);
 
             let labelPosition = this.createLabelPosition(transition.labelPosition, path);
 
-            this.transitions.push({transition: {stateFrom, stateTo, input, queueIn, queueOut}, path, labelPosition});
+            let labelAlign = transition.labelAlign ?? "left";
+
+            this.transitions.push({transition: {stateFrom, stateTo, input, queueIn, queueOut}, path, labelPosition, labelAlign});
         }
         if (!this.states.has(value.initialState)) {
             throw new Error(`Initial state ${value.initialState} not found in states`);
@@ -143,7 +153,7 @@ export class PQAData {
             }
         }
         angle = -angle / 360 * 2 * Math.PI;
-        let x = midpoint.x + 20 * Math.cos(angle) - 5;
+        let x = midpoint.x + 20 * Math.cos(angle);
         let y = midpoint.y + 20 * Math.sin(angle);
         return {x, y}
     }

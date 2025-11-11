@@ -25,7 +25,7 @@
                 Make sure to read the descriptions on the right side for each level.
             </p>
             <div style="text-align: center">
-                <form method="dialog">
+                <form method="dialog" onsubmit="window.Game.instance.ui.showDescription()">
                     <button id="welcome_begin_button">Begin</button>
                 </form>
             </div>
@@ -34,30 +34,39 @@
     <nav class="sidebar">
         <h1>Levels</h1>
         <ol id="levels"></ol>
+        <button onclick="window.Game.instance?.resetProgress()" class="reset">Reset All Progress</button>
+        <a id="github-icon" href="https://github.com/brightlego/pqa_game"></a>
     </nav>
-    <div class="description">
-        <section>
-            <h1 id="level_name">Please Select a Level</h1>
-            <p id="level_description"></p>
-        </section>
-    </div>
+    <dialog id="description" class="popup-background">
+        <div class="popup" id="inner_description">
+            <div class="description">
+                <section>
+                    <h1 id="level_name">Please Select a Level</h1>
+                    <p id="level_description"></p>
+                </section>
+            </div>
+            <div style="text-align: center">
+                <form method="dialog">
+                    <button id="description_ok">Ok</button>
+                </form>
+            </div>
+        </div>
+
+    </dialog>
     <main id="game_window">
+
         <div class="automaton">
             <canvas id="states"></canvas>
             <table id="queue"></table>
         </div>
         <p id="word"></p>
         <div class="prev_next">
-            <button value="" id="prev" onclick="window.Game.instance.onLevelSelect(this.value)">Previous</button>
+            <button value="" id="prev" onclick="window.Game.instance.onLevelSelect(this.value)">&lt;|</button>
             <button onclick="window.Game.instance.resetCurrentPQA()" class="reset">Reset</button>
-            <button value="" id="next" onclick="window.Game.instance.onLevelSelect(this.value)">Next</button>
+            <button onclick="window.Game.instance.ui.showDescription()" class="reset">Description</button>
+            <button value="" id="next" onclick="window.Game.instance.onLevelSelect(this.value)">|&gt;</button>
         </div>
     </main>
-    <footer>
-        <button onclick="window.Game.instance?.resetProgress()" class="reset">Reset All Progress</button>
-        <a id="github-icon" href="https://github.com/brightlego/pqa_game"></a>
-
-    </footer>
 
     <canvas id="stateHitRegion" hidden="hidden"></canvas>
 </body>
